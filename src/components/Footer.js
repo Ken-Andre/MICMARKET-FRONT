@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-
+import { BsLinkedin, BsTiktok, BsYoutube, BsInstagram } from "react-icons/bs";
 const Footer = () => {
   return (
     <>
@@ -36,15 +36,30 @@ const Footer = () => {
             <div className='col-4'>
               <h4 className='text-white mb-4'>Contact Us</h4>
               <div>
-                <address className='text-white fs-5'>
-                  PinCode: wm
+                <address className='text-white fs-6'>
+                  Address : 3e etage Immeuble IPN  <br /> Bonapriso, Cameroun <br />
+                  PB: 5504
                 </address>
-                <a href='tel: +237 678495663' className='mt-4 d-block mb-2 text-white'>
+                <a href='tel: +237 678495663' className='mt-4 d-block mb-1 text-white'>
                   +237 678 49 56 63
                 </a>
-                <a href='mailto: jabaspace@gmail.com' className='mt-4 d-block mb-2 text-white'>
+                <a href='mailto: jabaspace@gmail.com' className='mt-4 d-block mb-0 text-white'>
                   jabaspace@gmail.com
                 </a>
+                <div className=' d-flex align-items-center gap-30 mt-4'>
+                  <a href='' className="mt-2 d-block mb-0 text-white">
+                    <BsInstagram className='fs-4' />
+                  </a>
+                  <a href='' className="mt-2 d-block mb-0 text-white">
+                    <BsYoutube className='fs-4' />
+                  </a>
+                  <a href='' className="mt-2 d-block mb-0 text-white">
+                    <BsTiktok className='fs-4' />
+                  </a>
+                  <a href='' className="mt-2 d-block mb-0 text-white">
+                    <BsLinkedin className='fs-4' />
+                  </a>
+                </div>
               </div>
             </div>
             <div className='col-3'>
