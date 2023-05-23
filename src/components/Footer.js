@@ -47,16 +47,16 @@ const Footer = () => {
                   jabaspace@gmail.com
                 </a>
                 <div className=' d-flex align-items-center gap-30 mt-4'>
-                  <a href='' className="mt-2 d-block mb-0 text-white">
+                  <a href='#' className="mt-2 d-block mb-0 text-white">
                     <BsInstagram className='fs-4' />
                   </a>
-                  <a href='' className="mt-2 d-block mb-0 text-white">
+                  <a href='#' className="mt-2 d-block mb-0 text-white">
                     <BsYoutube className='fs-4' />
                   </a>
-                  <a href='' className="mt-2 d-block mb-0 text-white">
+                  <a href='#' className="mt-2 d-block mb-0 text-white">
                     <BsTiktok className='fs-4' />
                   </a>
-                  <a href='' className="mt-2 d-block mb-0 text-white">
+                  <a href='#' className="mt-2 d-block mb-0 text-white">
                     <BsLinkedin className='fs-4' />
                   </a>
                 </div>
