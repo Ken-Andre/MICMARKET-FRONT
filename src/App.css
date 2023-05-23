@@ -18,7 +18,17 @@
   --white: #fff;
   --bg-image-url: url(../public/images/bg_images.png);
 }
-
+.section-heading {
+  font-size: 26px;
+  line-height: 32px;
+  font-weight: 500;
+  margin-bottom: 30px;
+}
+.card-wrapper {
+  background-color: white;
+  box-shadow: 0 0 10px #0000001a;
+  padding: 15px;
+}
 body {
   font-family: "Rubik", sans-serif;
 }

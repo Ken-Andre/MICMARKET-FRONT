@@ -56,17 +56,47 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Resume 3 columns svg */}
-      <section class="setup">
-        <div class="container">
-          <div class="text-header text-center">
-            <h3>Participez à la croissance des startups locaux et internationaux !</h3>
-            <p>
-              L'investissement participatif présente un risque important de perte partielle ou totale du capital ainsi qu'un risque d'illiquidité. <br />
-              Un crédit vous engage et doit être remboursé. N'empruntez pas au-delà de votre capacité de remboursement.
-            </p>
+      {/* Section defilement brand */}
+      <section className="marque-wrapper home-wrapper-2 py-5">
+        <div className="row">
+          <div className="col-12">
+            <div className=' center align-center-items'>
+              <h1>Il nous font Confiance</h1>
+            </div>
+            <div className="marquee-inner-wrapper card-wrapper">
+              <Marquee className="d-flex">
+                <div className="mx-4 w-25">
+                  <img src="images/brand-01.png" alt="brand" />
+                </div>
+                <div className="mx-4 w-25">
+                  <img src="images/brand-02.png" alt="brand" />
+                </div>
+                <div className="mx-4 w-25">
+                  <img src="images/brand-03.png" alt="brand" />
+                </div>
+                <div className="mx-4 w-25">
+                  <img src="images/brand-04.png" alt="brand" />
+                </div>
+                <div className="mx-4 w-25">
+                  <img src="images/brand-05.png" alt="brand" />
+                </div>
+                <div className="mx-4 w-25">
+                  <img src="images/brand-06.png" alt="brand" />
+                </div>
+                <div className="mx-4 w-25">
+                  <img src="images/brand-07.png" alt="brand" />
+                </div>
+                <div className="mx-4 w-25">
+                  <img src="images/brand-08.png" alt="brand" />
+                </div>
+              </Marquee>
+            </div>
           </div>
         </div>
+      </section>
+
+      {/* Resume 3 columns svg */}
+      <section class="setup">
         <div class="items text-center">
           <div class="row">
             <div class="col-md-4">
@@ -106,43 +136,13 @@ const Home = () => {
             </div>
           </div>
         </div>
-      </section>
-
-      {/* Section defilement brand */}
-      <section className="marque-wrapper home-wrapper-2 py-5">
-        <div className="row">
-          <div className="col-12">
-            <div className=' center align-center-items'>
-              <h1>Il nous font Confiance</h1>
-            </div>
-            <div className="marquee-inner-wrapper card-wrapper">
-              <Marquee className="d-flex">
-                <div className="mx-4 w-25">
-                  <img src="images/brand-01.png" alt="brand" />
-                </div>
-                <div className="mx-4 w-25">
-                  <img src="images/brand-02.png" alt="brand" />
-                </div>
-                <div className="mx-4 w-25">
-                  <img src="images/brand-03.png" alt="brand" />
-                </div>
-                <div className="mx-4 w-25">
-                  <img src="images/brand-04.png" alt="brand" />
-                </div>
-                <div className="mx-4 w-25">
-                  <img src="images/brand-05.png" alt="brand" />
-                </div>
-                <div className="mx-4 w-25">
-                  <img src="images/brand-06.png" alt="brand" />
-                </div>
-                <div className="mx-4 w-25">
-                  <img src="images/brand-07.png" alt="brand" />
-                </div>
-                <div className="mx-4 w-25">
-                  <img src="images/brand-08.png" alt="brand" />
-                </div>
-              </Marquee>
-            </div>
+        <div class="container">
+          <div class="text-header text-center">
+            <h3>Participez à la croissance des startups locaux et internationaux !</h3>
+            <p>
+              L'investissement participatif présente un risque important de perte partielle ou totale du capital ainsi qu'un risque d'illiquidité. <br />
+              Un crédit vous engage et doit être remboursé. N'empruntez pas au-delà de votre capacité de remboursement.
+            </p>
           </div>
         </div>
       </section>
