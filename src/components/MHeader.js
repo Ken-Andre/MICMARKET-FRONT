@@ -86,7 +86,7 @@ const MHeader = () => {
 
                         <img src='images/user.svg' alt='user' class="rounded-circle" width="32" height="32" />
                     </a>
-                    <ul class="dropdown-menu text-small show" style={{position: "absolute" , right:"0px"}} data-popper-placement="bottom-start">
+                    <ul class="dropdown-menu text-small " style={{}}>
                         <li><a class="dropdown-item" href="#">New Startup...</a></li>
                         <li><a class="dropdown-item" href="#">Admin</a></li>
                         <li><a class="dropdown-item" href="#">Account</a></li>

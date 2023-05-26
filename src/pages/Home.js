@@ -62,8 +62,16 @@ const Home = () => {
         <div class="row">
           <div class="col-sm-12 col-md-6 col-lg-4">
             <div class="card product-card">
-              <img src="chemin/vers/image1.jpg" alt="Image produit 1" width="70" height="70" />
-              <h3 class="card-title">Ejara</h3>
+
+              <h3 class="card-title">
+                <span className="right-gap">
+                  <img src="images/ejara.png"
+                    alt="Image produit 1"
+                    width="70"
+                    height="70" />
+                </span>
+                Ejara
+              </h3>
               <div class="card-body">
                 <p>Description 3-4 lignes d'Ejara</p>
               </div>
@@ -71,14 +79,22 @@ const Home = () => {
                 <div class="stars">
                   {/* <!-- Composant React Star avec une valeur aléatoire entre 3.8 et 5 --> */}
                 </div>
-                <a href="#">Acheter</a>
+                <a href="#">Voir Plus</a>
               </div>
             </div>
           </div>
-          <div class="col-sm-12 col-md-6 col-lg-4">
-            <div class="card product-card">
-              <img src="chemin/vers/image2.jpg" alt="Image produit 2" width="70" height="70" />
-              <h3 class="card-title">Maviance</h3>
+          <div class=" col-sm-12 col-md-6 col-lg-4">
+            <div class=" card product-card ">
+
+              <h3 class="card-title">
+                <span className="right-gap">
+                  <img src="images/maviance.jpeg"
+                    alt="Image produit 2"
+                    width="70"
+                    height="70" />
+                </span>
+                Maviance
+              </h3>
               <div class="card-body">
                 <p>Description 3-4 lignes de Maviance</p>
               </div>
@@ -86,22 +102,30 @@ const Home = () => {
                 <div class="stars">
                   {/* <!-- Composant React Star avec une valeur aléatoire entre 3.8 et 5 --> */}
                 </div>
-                <a href="#">Acheter</a>
+                <a href="#">Voir Plus</a>
               </div>
             </div>
           </div>
           <div class="col-sm-12 col-md-6 col-lg-4">
             <div class="card product-card">
-              <img src="chemin/vers/image3.jpg" alt="Image produit 3" width="70" height="70" />
-              <h3 class="card-title">Google</h3>
+
+              <h3 class="card-title">
+                <span className="right-gap">
+                  <img src="images/image_google.png"
+                    alt="Image produit 3"
+                    width="70"
+                    height="70" />
+                </span>
+                Google
+              </h3>
               <div class="card-body">
                 <p>Description 3-4 lignes de Google</p>
               </div>
               <div class="card-footer">
                 <div class="stars">
                   {/* <!-- Composant React Star avec une valeur aléatoire entre 3.8 et 5 --> */}
-                  </div>
-                <a href="#">Acheter</a>
+                </div>
+                <a href="#">Voir Plus</a>
               </div>
             </div>
           </div>
@@ -151,7 +175,7 @@ const Home = () => {
       <section class="information mx-auto">
         <div className="items text-center">
           <div class="row align-items-center">
-            <div class="col-md-4">
+            <div class="col-md-4 bottom-gap-md">
               <img src="images/icons-1.svg" alt="Description de l'image" />
               <div class="desc">
                 <h3>Projet/Startup</h3>
@@ -159,7 +183,7 @@ const Home = () => {
                 <a href="#" class="btn btn-primary"><i class="fas fa-arrow-right"></i> Bouton</a>
               </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 bottom-gap-md">
               <img src="images/icons-1.svg" alt="Description de l'image" />
               <div class="desc">
                 <h3>Investisseur</h3>
@@ -167,7 +191,7 @@ const Home = () => {
                 <a href="#" class="btn btn-primary"><i class="fas fa-arrow-right"></i> Bouton</a>
               </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 bottom-gap-md">
               <img src="images/icons-1.svg" alt="Description de l'image" />
               <div class="desc">
                 <h3>Banque</h3>

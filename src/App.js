@@ -15,14 +15,14 @@ function App() {
   <>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element= {<Layout />}>
+        <Route path="/" element= {<MLayout />}>
           <Route index element= {<Home />} />
           <Route path="about" element={<About />} />
           <Route path="contact" element={<Contact />} />
-          <Route path="shop" element={<OurStore />} />
+          <Route path="category" element={<OurStore />} />
 
         </Route>
-        <Route path="/m" element= {<MLayout />}>
+        <Route path="/m" element= {<Layout />}>
           <Route index element= {<Home />} />
           <Route path="about" element={<About />} />
           <Route path="contact" element={<Contact />} />
