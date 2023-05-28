@@ -12,6 +12,7 @@ const Contact = () => {
       {/*<BreadCrumb title="Contact Us" />*/}
       <div className="contact-wrapper py-1 home-wrapper-2">
         <div className="row">
+          {/* Div de la localisation sur map */}
           <div className="col-12">
             {/* Map */}
             <iframe
@@ -25,6 +26,7 @@ const Contact = () => {
             ></iframe>
             {/* Maps end */}
           </div>
+          {/* Fin div  de la localisation sur map*/}
           {/* Div pour aligner centrer et  contenir 2 div sur un grand ecran et un pour les ecran n'etant pas capables */}
           <div className="container d-flex flex-column justify-content-center align-items-center">
             <div className="col-12 mt-5 p-0 ">

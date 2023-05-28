@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { NavLink, Link } from 'react-router-dom'
+// import React, { useEffect, useState } from 'react'
+import { NavLink,  } from 'react-router-dom'
 
 const MHeader = () => {
     // useEffect(() => {
@@ -12,16 +12,16 @@ const MHeader = () => {
     //     }
     //     window.addEventListener('scroll', handleScroll)
     //   }, [])
-    const [tooltipText, setTooltipText] = useState('');
+    // const [tooltipText, setTooltipText] = useState('');
 
-    const handleMouseOver = (event) => {
-        setTooltipText(event.target.getAttribute('aria-label'));
+    // const handleMouseOver = (event) => {
+    //     setTooltipText(event.target.getAttribute('aria-label'));
 
-    };
+    // };
 
-    const handleMouseLeave = () => {
-        setTooltipText('');
-    };
+    // const handleMouseLeave = () => {
+    //     setTooltipText('');
+    // };
 
     return (
         <>
@@ -63,37 +63,52 @@ const MHeader = () => {
 
                 </div>
             </nav>  */}
-            <header class="navbar d-flex text-bg-dark flex-wrap align-items-center justify-content-center justify-content-md-between py-2  ">
-                <div class="col-md-3 mb-2 mb-md-0">
-                    <NavLink href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
+            <header class="navbar navbar-expand-lg d-flex text-bg-dark flex-wrap align-items-center justify-content-center justify-content-md-between py-2  ">
+                <div class="navbar-brand col-md-4 mb-2 ">
+                    <NavLink href="/" className="d-inline-flex link-body-emphasis text-white text-decoration-none">
                         {/* <svg class="bi" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg> */}
                         Dev Kyan
                     </NavLink>
                 </div>
 
                 <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-                    <li><NavLink to="/" class="text-white  nav-link px-2 link-secondary">Home</NavLink></li>
-                    <li><NavLink to="/category" class="text-white nav-link px-2">All Category</NavLink></li>
-                    <li><NavLink to="/contact" class="text-white nav-link px-2">Contact</NavLink></li>
+                    <li class="nav-items"><NavLink to="/" className="text-white  nav-link px-2 link-secondary">Home</NavLink></li>
+                    <li class="nav-items"><NavLink to="/category" className="text-white nav-link px-2">All Category</NavLink></li>
+                    <li class="nav-items"><NavLink to="/contact" className="text-white nav-link px-2">Contact</NavLink></li>
                 </ul>
 
                 <div class="col-md-3 text-end ms-auto">
-                    <button type="button" class="btn btn-outline-primary me-2">Login</button>
-                    <button type="button" class="btn btn-primary">Sign-up</button>
+                    <NavLink to="/login" type="button" className="btn btn-outline-primary me-2">Login</NavLink>
+                    <NavLink to="/signin" type="button" className="btn btn-primary">Sign-In</NavLink>
                 </div>
                 <div class="dropdown text-end">
-                    <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle " data-bs-toggle="dropdown" aria-expanded="true">
+                    <a href="#" class="d-block link-dark btn dropdown-toggle "
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false">
 
-                        <img src='images/user.svg' alt='user' class="rounded-circle" width="32" height="32" />
+                        <img src='images/user.svg' alt='user' class="rounded-circle"
+                            width="32"
+                            height="32" />
                     </a>
-                    <ul class="dropdown-menu text-small " style={{}}>
-                        <li><a class="dropdown-item" href="#">New Startup...</a></li>
-                        <li><a class="dropdown-item" href="#">Admin</a></li>
-                        <li><a class="dropdown-item" href="#">Account</a></li>
-                        <li><hr class="dropdown-divider" /></li>
-                        <li><a class="dropdown-item" href="#">Sign out</a></li>
+                    <ul class="dropdown-menu dropdown-menu-end " style={{}}>
+                        <li class="nav-items"><a class="dropdown-item" href="#">New Startup...</a></li>
+                        <li class="nav-items"><a class="dropdown-item" href="#">Admin</a></li>
+                        <li class="nav-items"><a class="dropdown-item" href="#">Account</a></li>
+                        <li class="nav-items"><hr class="dropdown-divider" /></li>
+                        <li class="nav-items"><a class="dropdown-item" href="#">Sign out</a></li>
                     </ul>
                 </div>
+                {/* <div class="btn-group text-end">
+                    <button type="button" data-bs-toggle="dropdown" aria-expanded="false" class="btn dropdown-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" fill="purple">
+                            <path d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464H398.7c-8.9-63.3-63.3-112-129-112H178.3c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3z"></path></svg>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end" style={{}}>
+                        <li class="nav-items"><button class="dropdown-item" type="button">Action</button></li>
+                        <li class="nav-items"><button class="dropdown-item" type="button">Another action</button></li>
+                        <li class="nav-items"><button class="dropdown-item" type="button">Something else here</button></li>
+                    </ul>
+                </div> */}
             </header>
         </>
     )
