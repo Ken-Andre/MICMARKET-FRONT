@@ -11,6 +11,7 @@ import OurStore from './pages/OurStore';
 import SingleProduct from './pages/SingleProduct';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import Signin from './pages/Signin';
 
 
 
@@ -33,7 +34,7 @@ function App() {
 
         </Route>
         <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
+          <Route path="/signin" element={<Signin />} />
 
         <Route path="/m" element= {<Layout />}>
           <Route index element= {<Home />} />
