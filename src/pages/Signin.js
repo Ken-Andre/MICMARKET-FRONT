@@ -1,6 +1,7 @@
 import { React, useState, useEffect, useRef } from "react";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import BreadCrumb from "../components/BreadCrumb";
 
 
 const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9_]{3,23}$/;
@@ -13,12 +14,12 @@ const Signin = () => {
     const errRef = useRef();
 
     const [user, setUser] = useState('');
-    const [validUser, setValidUser] = useState(false);
+    const [validName, setValidName] = useState(false);
     const [userFocus, setUserFocus] = useState(false);
 
     const [nameUser, setNameUser] = useState('');
-    const [validNameUser, setValidNameUser] = useState(false);
-    const [nameFocus, setNameFocus] = useState(false);
+    const [validnameUser, setValidnameUser] = useState(false);
+    const [nameuserFocus, setnameUserFocus] = useState(false);
 
     const [pwd, setPwd] = useState('');
     const [validPwd, setValidPwd] = useState(false);
@@ -32,6 +33,7 @@ const Signin = () => {
     const [errMsg, setErrMsg] = useState('');
     const [success, setSuccess] = useState(false);
 
+    // Username section start
     useEffect(() => {
         userRef.current.focus();
     }, [])
@@ -43,19 +45,20 @@ const Signin = () => {
         console.log(user);
         setValidName(result);
     }, [user])
+    // Username section ends
 
-    // Start Here
-    useEffect(() => {
-        nameRef.current.focus();
-    }, [])
+    // Name (first,last) section start
+    // useEffect(() => {
+    //     nameRef.current.focus();
+    // }, [])
 
     // Function to validate Name
     useEffect(() => {
-        const result = NAME_REGEX.test(name);
+        const result = NAME_REGEX.test(nameUser);
         console.log(result);
-        console.log(name);
+        console.log(nameUser);
         setValidName(result);
-    }, [name])
+    }, [nameUser])
 
     //Function to validate passwords
     useEffect(() => {
@@ -71,18 +74,30 @@ const Signin = () => {
         setErrMsg('');
     }, [user, nameUser, pwd, matchPwd])
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        // if button enabled with JS hack
+        const v1 = USER_REGEX.test(user);
+        const v2 = PWD_REGEX.test(pwd);
+        if (!v1 || !v2) {
+            setErrMsg("Invalid Entry");
+            return;
+        }
+    }
+
     return (
         <>
             <section>
+                <BreadCrumb />
                 <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">
                     {errMsg}
                 </p>
                 <h1>Register</h1>
-                <form >
+                <form onSubmit={handleSubmit}>
                     <label htmlFor="username">
                         Username:
-                        <span className={validName ? "valid" : "hide"}>
-                            <FontAwesomeIcon icon={faCheck} />
+                        <span >
+                            <FontAwesomeIcon icon={faCheck} className={validName ? "valid" : "hide"}/>
                         </span>
                         <span className={validName || !user ? "hide" : "invalid"}>
                             <FontAwesomeIcon icon={faTimes} />
@@ -132,6 +147,28 @@ const Signin = () => {
                         <span aria-label="dollar sign">$</span>
                         <span aria-label="percent">%</span>
                     </p>
+                    <label htmlFor="confirm_pwd">
+                        Confirm Password:
+                        <FontAwesomeIcon icon={faCheck} className={validMatch && matchPwd ? "valid" : "hide"} />
+                        <FontAwesomeIcon icon={faTimes} className={validMatch || !matchPwd ? "hide" : "invalid"} />
+                    </label>
+                    <input
+                        type="password"
+                        id="confirm_pwd"
+                        onChange={(e) => setMatchPwd(e.target.value)}
+                        value={matchPwd}
+                        required
+                        aria-invalid={validMatch ? "false" : "true"}
+                        aria-describedby="confirmnote"
+                        onFocus={() => setMatchFocus(true)}
+                        onBlur={() => setMatchFocus(false)}
+                    />
+                    <p id="confirmnote" className={matchFocus && !validMatch ? "instructions" : "offscreen"}>
+                        <FontAwesomeIcon icon={faInfoCircle} />
+                        Must match the first password input field.
+                    </p>
+
+                    <button disabled={!validName || !validPwd || !validMatch ? true : false}>Sign Up</button>
                 </form>
             </section>
         </>
