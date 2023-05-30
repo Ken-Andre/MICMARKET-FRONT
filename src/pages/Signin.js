@@ -2,13 +2,18 @@ import { React, useState, useEffect, useRef } from "react";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import BreadCrumb from "../components/BreadCrumb";
-
+import { NavLink } from "react-router-dom";
+//import axf from '../utils/axios';
+import axios from "axios";
+//const axios = axf();
 
 const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9_]{3,23}$/;
 const NAME_REGEX = /^[a-zA-ZÀ-ÿ0-9-]{2,30}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%&]).{8,24}$/;
-
+const REGISTER_URL = 'https://eoniy1qondyec20.m.pipedream.net';
 const Signin = () => {
+    //Toutes mes useState +useEffect debut
+
     const userRef = useRef();
     const nameRef = useRef();
     const errRef = useRef();
@@ -74,6 +79,8 @@ const Signin = () => {
         setErrMsg('');
     }, [user, nameUser, pwd, matchPwd])
 
+    //Toutes mes useState +useEffect debut
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         // if button enabled with JS hack
@@ -83,11 +90,74 @@ const Signin = () => {
             setErrMsg("Invalid Entry");
             return;
         }
+        // try {
+        //     const response = await axios.post(REGISTER_URL,
+        //         JSON.stringify({ user, pwd }),
+        //         {
+        //             headers: { 'Content-Type': 'application/json' },
+        //             withCredentials: true
+        //         }
+        //     );
+        //     console.log(response?.data);
+        //     console.log(response?.accessToken);
+        //     console.log(JSON.stringify(response))
+        //     setSuccess(true);
+        //     //clear state and controlled inputs
+        //     //need value attrib on inputs for this
+        //     setUser('');
+        //     setPwd('');
+        //     setMatchPwd('');
+        // } catch (err) {
+        //     if (!err?.response) {
+        //         setErrMsg('No Server Response');
+        //     } else if (err.response?.status === 409) {
+        //         setErrMsg('Username Taken');
+        //     } else {
+        //         setErrMsg('Registration Failed')
+        //     }
+        //     errRef.current.focus();
+        // }
+        //else {
+        const payload = {
+            user: user,
+            pwd: pwd
+        };
+
+        fetch("https://9b72679d267b125061efb8f853d5901f.m.pipedream.net", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json(); // extract JSON response from response object
+            })
+            .then(data => {
+                console.log('Server response:', data); // log JSON response
+            })
+            .catch(err => {
+                console.error('Error:', err); // log error
+                if (!err?.response) {
+                    setErrMsg('No Server Response');
+                } else if (err.response?.status === 409) {
+                    setErrMsg('Username Taken');
+                } else {
+                    setErrMsg('Registration Failed')
+                }
+                errRef.current.focus();
+            });
+        //}
+
     }
 
     return (
         <>
             <section>
+
                 <BreadCrumb />
                 <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">
                     {errMsg}
@@ -96,12 +166,12 @@ const Signin = () => {
                 <form onSubmit={handleSubmit}>
                     <label htmlFor="username">
                         Username:
-                        <span >
-                            <FontAwesomeIcon icon={faCheck} className={validName ? "valid" : "hide"}/>
-                        </span>
-                        <span className={validName || !user ? "hide" : "invalid"}>
-                            <FontAwesomeIcon icon={faTimes} />
-                        </span>
+
+                        <FontAwesomeIcon icon={faCheck} className={validName ? "valid" : "hide"} />
+
+
+                        <FontAwesomeIcon icon={faTimes} className={validName || !user ? "hide" : "invalid"} />
+
                     </label>
                     <input
                         type="text"
@@ -115,7 +185,7 @@ const Signin = () => {
                         onFocus={() => setUserFocus(true)}
                         onBlur={() => setUserFocus(false)}
                     />
-                    <p id="uidnote" className="{user">
+                    <p id="uidnote" className={userFocus && user && !validName ? "instructions" : "offscreen"}>
                         <FontAwesomeIcon icon={faInfoCircle} />
                         4 to 24 characters <br />
                         Must begin with a letter.<br />
@@ -170,6 +240,13 @@ const Signin = () => {
 
                     <button disabled={!validName || !validPwd || !validMatch ? true : false}>Sign Up</button>
                 </form>
+                <p>
+                    Already registered?<br />
+                    <span className="line">
+                        {/*put router link here*/}
+                        <NavLink to="/login">Login</NavLink>
+                    </span>
+                </p>
             </section>
         </>
     )
