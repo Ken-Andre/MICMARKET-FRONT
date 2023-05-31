@@ -13,7 +13,7 @@ const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%&]).{8,24}$/;
 const MAIL_REGEX = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,})$/;
 const TEL_REGEX = /^((?=.{8,}$)[2-3-6]{1}((\s)|(-)?){0,1}([0-9]{2})((\s)|(-)?){0,1}([0-9]{2})((\s)|(-)?){0,1}([0-9]{2})((\s)|(-)?){0,1}([0-9]{2}))$/
 
-const REGISTER_URL = 'http://localhost:5000/api/user/register';
+const REGISTER_URL = 'http://192.168.2.132:5000/api/user/register';
 const Signin = () => {
     //Toutes mes useState +useEffect debut
 
@@ -115,7 +115,7 @@ const Signin = () => {
     useEffect(() => {
         setErrMsg('');
     }, [nameUser, lastnameUser, mailuser, mobile, pwd, matchPwd])
-// Je dois ajouter user, en haut
+    // Je dois ajouter user, en haut
     //Toutes mes useState +useEffect debut
 
     const handleSubmit = async (e) => {
@@ -127,7 +127,7 @@ const Signin = () => {
         const v4 = NAME_REGEX.test(lastnameUser);
         const v5 = MAIL_REGEX.test(mailuser);
         const v6 = TEL_REGEX.test(mobile);
-        if ( !v2 || !v3 || !v4 || !v5 || !v6) {
+        if (!v2 || !v3 || !v4 || !v5 || !v6) {
             setErrMsg("Invalid Entry");
             return;
         }
@@ -163,8 +163,8 @@ const Signin = () => {
             // user: user,
             firstname: nameUser,
             lastname: lastnameUser,
-            pwd: pwd,
-            mail: mailuser,
+            password: pwd,
+            email: mailuser,
             mobile: mobile,
         };
         // "https://9b72679d267b125061efb8f853d5901f.m.pipedream.net"
@@ -391,7 +391,7 @@ const Signin = () => {
                     </p>
                     {/* Fin Input Mobile */}
 
-                    <button disabled={ !validPwd || !validMatch ? true : false}>Sign Up</button>
+                    <button disabled={!validPwd || !validMatch ? true : false}>Sign Up</button>
                     {/* !validName || */}
                 </form>
                 <p>
