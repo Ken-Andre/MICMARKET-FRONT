@@ -566,7 +566,7 @@ a:hover svg {
 
 /*  Singin Login Page  */
 
-section {
+/* section {
   width: 100%;
   max-width: 420px;
   min-height: 400px;
@@ -575,7 +575,7 @@ section {
   justify-content: flex-start;
   padding: 1rem;
   background-color: rgba(0,0,0,0.4);
-}
+} */
 
 form {
   display: flex;
@@ -591,9 +591,11 @@ a, a:visited {
 
 input[type="text"],
 input[type="password"],
+input[type="mail"],
+input[type="tel"],
 button,
 textarea {
-font-family: 'Nunito', sans-serif;
+/* font-family: 'Nunito', sans-serif; */
 font-size: 22px;
 padding: 0.25rem;
 border-radius: 0.5rem;
