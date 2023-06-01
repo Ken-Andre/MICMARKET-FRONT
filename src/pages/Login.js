@@ -1,14 +1,17 @@
 import { React, useEffect, useRef, useState } from "react";
 // import { Link } from "react-router-dom";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import BreadCrumb from "../components/BreadCrumb";
 import Meta from "../components/Meta";
 
 
 const LOGIN_URL = 'http://127.0.0.1:5000/api/user/login';
+const DELAY_BEF_MOVE = 2500;
 const Login = () => {
   const userRef = useRef();
   const errRef = useRef();
+  const successRef = useRef();
+  const navigate = useNavigate();
 
   const [mailUser, setMailUser] = useState('');
   const [emptyMail, setEmptyMail] = useState(true);
@@ -70,17 +73,30 @@ const Login = () => {
         if (!response.ok) {
           throw new Error("Failed to send! \n Verify Your Network Connection !");
         }
+        else if (response.status === 500){
+          if (response.json().message === 'Invalid Credentials !'){
+            setErrMsg('Invalid Email or password');
+          }
+          else{
+            setErrMsg('Invalid Credentials');
+          }
+        }
         else {
+          setErrMsg('');
           setSuccess(true);
           setMailUser('');
           setPwdUser('');
+          setTimeout(() => {
+            navigate.pushState('/');
+          }, DELAY_BEF_MOVE);
+
         }
         return response.json(); // extract JSON response from response object
       })
       .then(data => {
-        console.log('Server Response', data);
+        console.log('Server Response:', data);
         if (data.message === 'Invalid Credentials !') {
-          setErrMsg('Invalid Email or password');
+          setErrMsg('Invalid Email or pwd');
         } else {
           setErrMsg('Login Failed');
         }
@@ -88,7 +104,11 @@ const Login = () => {
       })
       .catch(err => {
         console.log('Error:', err);
-        // setErrMsg('Login Failed');
+        if (err.response?.status === 500) {
+          setErrMsg('Login Failed');
+        } else {
+          setErrMsg(err.message || 'Invalid Email or password');
+        }
         errRef.current.focus();
       });
   }
@@ -102,9 +122,16 @@ const Login = () => {
           <div className="col-12">
             <div className=" form-signin  m-auto w-75">
               <h1 className="text-center mb-3 ">Content de vous revoir !</h1>
-              <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">
-                {errMsg}
-              </p>
+              {errMsg && (
+                <p ref={errRef} className="errmsg" aria-live="assertive">
+                  {errMsg}
+                </p>
+              )}
+              {success && (
+                <p ref={successRef} className="successmsg" aria-live="assertive">
+                  Data has been saved successfully!
+                </p>
+              )}
               <form className="m-auto " action="POST" onSubmit={handleSubmit}>
                 {/* <!--<img className="mb-4" src="/docs/5.3/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57"> --> */}
                 {/* # Politesse Debut */}
