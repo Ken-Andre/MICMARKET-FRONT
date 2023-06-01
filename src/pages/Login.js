@@ -145,20 +145,21 @@ const Login = () => {
                 {/* Fin Remember Zone */}
                 {/* Debut Submit Form Button */}
                 <div className="d-flex justify-content-center">
-                  <button type="submit" disabled={emptyMail || emptyPwd ? true : false} className="btn btn-lg btn-primary form-control border-0">Login</button>
+                  <button type="submit" disabled={emptyMail || emptyPwd ? true : false} className="btn btn-lg btn-primary form-control border-0 mb-2">Login</button>
                 </div>
                 {/* Fin Submit Form Button */}
-                {/* Debut Copyright */}
-                <p className="mt-5 mb-3 text-body-secondary">© 2017–2023</p>
-                {/* Fin Copyright */}
+                <p>
+                  Not Registered?
+                  <span className="line">
+                    {/*put router link here*/}
+                    <NavLink to="/signin" className="fw-medium text-primary text-opacity-75 left-gap">Signin</NavLink>
+                  </span>
+                </p>
               </form>
-              <p>
-                Not Registered?
-                <span className="line">
-                  {/*put router link here*/}
-                  <NavLink to="/signin" className="fw-medium text-primary text-opacity-75 left-gap">Signin</NavLink>
-                </span>
-              </p>
+
+              {/* Debut Copyright */}
+              <p className="mt-3 mb-3 text-body-secondary text-end">&copy; 2023-{new Date().getFullYear()}</p>
+              {/* Fin Copyright */}
             </div>
           </div>
         </div>

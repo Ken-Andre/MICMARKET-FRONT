@@ -202,19 +202,19 @@ const Signin = () => {
 
     return (
         <>
-            <Meta title={"Signin"} />
+            <Meta title={"Signin"} className={"Signin"} />
 
+            <BreadCrumb title={"Signin"} />
             <div className="login-wrapper py-5 home-wrapper-2">
-                <Meta className={"Register"} />
-                <BreadCrumb title="Register" />
                 {/* Ici */}
+                {/* <BreadCrumb title={"Signin"} /> */}
                 <div className="row">
                     <div className="col-12">
                         <div className=" form-signin  m-auto w-75">
                             <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">
                                 {errMsg}
                             </p>
-                            <h1>Register</h1>
+                            <h1>Enregistrer vous</h1>
                             <form className="m-auto " onSubmit={handleSubmit}>
                                 {/* Debut Input Username  */}
                                 {/* <label htmlFor="username">
@@ -227,6 +227,7 @@ const Signin = () => {
 
                     </label>
                     <input
+className="form-control"
                         type="text"
                         name="username"
                         ref={userRef}
@@ -254,6 +255,7 @@ const Signin = () => {
                                         <FontAwesomeIcon icon={faTimes} className={validnameUser || !nameUser ? "hide" : "invalid"} />
                                     </label>
                                     <input
+                                        className="form-control"
                                         type="text"
                                         name="firstname"
                                         ref={userRef}
@@ -284,6 +286,7 @@ const Signin = () => {
                                         <FontAwesomeIcon icon={faTimes} className={validlastnameUser || !lastnameUser ? "hide" : "invalid"} />
                                     </label>
                                     <input
+                                        className="form-control"
                                         type="text"
                                         name="lastname"
                                         ref={userRef}
@@ -312,6 +315,7 @@ const Signin = () => {
                                         <FontAwesomeIcon icon={faTimes} className={validMail || !mailuser ? "hide" : "invalid"} />
                                     </label>
                                     <input
+                                        className="form-control"
                                         type="mail"
                                         name="mail"
                                         ref={userRef}
@@ -337,6 +341,7 @@ const Signin = () => {
                                         <FontAwesomeIcon icon={faTimes} className={validPwd || !pwd ? "hide" : "invalid"} />
                                     </label>
                                     <input
+                                        className="form-control"
                                         type="password"
                                         id="password"
                                         onChange={(e) => setPwd(e.target.value)}
@@ -367,6 +372,7 @@ const Signin = () => {
                                         <FontAwesomeIcon icon={faTimes} className={validMatch || !matchPwd ? "hide" : "invalid"} />
                                     </label>
                                     <input
+                                        className="form-control"
                                         type="password"
                                         id="confirm_pwd"
                                         onChange={(e) => setMatchPwd(e.target.value)}
@@ -384,13 +390,14 @@ const Signin = () => {
                                 </div>
 
                                 {/* Debut Input Tel | Mobile */}
-                                <div className="mb-1">
+                                <div className="mb-3">
                                     <label htmlFor="mobile" className="">
                                         Mobile:
                                         <FontAwesomeIcon icon={faCheck} className={validMobile ? "valid" : "hide"} />
                                         <FontAwesomeIcon icon={faTimes} className={validMobile || !mobile ? "hide" : "invalid"} />
                                     </label>
                                     <input
+                                        className="form-control"
                                         type="tel"
                                         name="mobile"
                                         ref={userRef}
@@ -409,17 +416,22 @@ const Signin = () => {
                                     </p>
                                 </div>
                                 {/* Fin Input Mobile */}
-
-                                <button className="btn btn-lg btn-primary form-control border-0" disabled={!validPwd || !validMatch ? true : false}>Sign Up</button>
+                                <div className="d-flex justify-content-center">
+                                    <button className="btn btn-lg btn-primary form-control border-0 mb-2" disabled={!validPwd || !validMatch ? true : false}>Sign Up</button>
+                                </div>
                                 {/* !validName || */}
+                                <p>
+                                    Already registered?
+                                    <span className="line">
+                                        {/*put router link here*/}
+                                        <NavLink to="/login" className="fw-medium text-primary text-opacity-75 left-gap">Login</NavLink>
+                                    </span>
+                                </p>
                             </form>
-                            <p>
-                                Already registered?<br />
-                                <span className="line">
-                                    {/*put router link here*/}
-                                    <NavLink to="/login" className="fw-medium text-primary text-opacity-75 left-gap">Login</NavLink>
-                                </span>
-                            </p>
+
+                            {/* Debut Copyright */}
+                            <p className="mt-3 mb-2 text-body-secondary text-end"> &copy; 2023-{new Date().getFullYear()} </p>
+                            {/* Fin Copyright */}
                         </div>
                     </div>
                 </div>
