@@ -2,7 +2,7 @@ import { React, useState, useEffect, useRef } from "react";
 import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import BreadCrumb from "../components/BreadCrumb";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 //import axf from '../utils/axios';
 import axios from "axios";
 import Meta from "../components/Meta";
@@ -14,13 +14,16 @@ const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%&]).{8,24}$/;
 const MAIL_REGEX = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,})$/;
 const TEL_REGEX = /^((?=.{8,}$)[2-3-6]{1}((\s)|(-)?){0,1}([0-9]{2})((\s)|(-)?){0,1}([0-9]{2})((\s)|(-)?){0,1}([0-9]{2})((\s)|(-)?){0,1}([0-9]{2}))$/
 
-const REGISTER_URL = 'http://127.0.0.1:5000/api/user/register';
+const REGISTER_URL = 'http://192.168.2.132:5000/api/user/register';
+const DELAY_SIGNTOLOG = 3500;
+
 const Signin = () => {
     //Toutes mes useState +useEffect debut
 
     const userRef = useRef();
-    const nameRef = useRef();
-    const errRef = useRef();
+    const succRef = useRef();
+    const errRef = useRef(); //document.createElement('p')
+    const navigate = useNavigate();
 
     // const [user, setUser] = useState('');
     // const [validName, setValidName] = useState(false);
@@ -112,13 +115,15 @@ const Signin = () => {
     }, [pwd, matchPwd])
 
 
-
+    //Function for prints status error
     useEffect(() => {
         setErrMsg('');
+        setSuccess(false);
     }, [nameUser, lastnameUser, mailuser, mobile, pwd, matchPwd])
     // Je dois ajouter user, en haut
     //Toutes mes useState +useEffect debut
 
+    //Function for Post Submit form
     const handleSubmit = async (e) => {
         e.preventDefault();
         // if button enabled with JS hack
@@ -157,7 +162,7 @@ const Signin = () => {
         //     } else {
         //         setErrMsg('Registration Failed')
         //     }
-        //     errRef.current.focus();
+        //     errRef.current && errRef.current.focus();
         // }
         //else {
         const payload = {
@@ -177,8 +182,32 @@ const Signin = () => {
             body: JSON.stringify(payload)
         })
             .then(response => {
+                console.log(response.ok);
                 if (!response.ok) {
-                    throw new Error('Network response was not ok');
+
+                    if (response.status === 500) {
+                        console.log(response, "& ", response.status);
+
+                        setErrMsg('User already');
+
+                    }
+                    console.log("the response was:", response.ok, "\n and headers:", response.headers);
+                    // throw  new Error('This account already exists') ;
+                }
+                else {
+                    setErrMsg('');
+                    setSuccess(true);
+                    setNameUser('');
+                    setLastNameUser('');
+                    setMailUser('');
+                    setPwd('');
+                    setMatchPwd('');
+                    setMobile('');
+
+                    setTimeout(() => {
+                        navigate('/login');
+                    }, DELAY_SIGNTOLOG);
+
                 }
                 return response.json(); // extract JSON response from response object
             })
@@ -187,21 +216,32 @@ const Signin = () => {
             })
             .catch(err => {
                 console.error('Error:', err); // log error
-                if (!err?.response) {
+                if (!err === "") {
+                    console.log(err);
                     setErrMsg('No Server Response');
+
                 } else if (err.response?.status === 409) {
                     setErrMsg('Username Taken');
                 } else {
-                    setErrMsg('Registration Failed')
+                    setErrMsg('Registration Failed');
+
+
                 }
-                errRef.current.focus();
+
+                errRef.current && errRef.current.focus();
             });
+        if (errMsg !== "") {
+            setSuccess(false); //Il y'a un petit pb
+            console.log(success);
+        }
         //}
 
     }
 
+
     return (
         <>
+            {/* Some visual things */}
             <Meta title={"Signin"} className={"Signin"} />
 
             <BreadCrumb title={"Signin"} />
@@ -211,9 +251,17 @@ const Signin = () => {
                 <div className="row">
                     <div className="col-12">
                         <div className=" form-signin  m-auto w-75">
-                            <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">
-                                {errMsg}
-                            </p>
+                            {errMsg && (
+                                <p ref={errRef} className="errmsg" aria-live="assertive">
+                                    {errMsg}
+
+                                </p>
+                            )}
+                            {success && (
+                                <p ref={succRef}  className="successmsg" aria-live="assertive">
+                                    Data has been saved successfully!
+                                </p>
+                            )}
                             <h1>Enregistrer vous</h1>
                             <form className="m-auto " onSubmit={handleSubmit}>
                                 {/* Debut Input Username  */}
@@ -234,7 +282,7 @@ className="form-control"
                         autoComplete="off"
                         onChange={(e) => setUser(e.target.value)}
                         required
-                        aria-aria-invalid={validName ? "false" : "true"}
+                        aria-invalid={validName ? "false" : "true"}
                         aria-describedby="uidnote"
                         onFocus={() => setUserFocus(true)}
                         onBlur={() => setUserFocus(false)}
@@ -262,7 +310,7 @@ className="form-control"
                                         autoComplete="off"
                                         onChange={(e) => setNameUser(e.target.value)}
                                         required
-                                        aria-aria-invalid={validnameUser ? "false" : "true"}
+                                        aria-invalid={validnameUser ? "false" : "true"}
                                         aria-describedby="uidnote"
                                         onFocus={() => setNameUserFocus(true)}
                                         onBlur={() => setNameUserFocus(false)}
@@ -293,7 +341,7 @@ className="form-control"
                                         autoComplete="off"
                                         onChange={(e) => setLastNameUser(e.target.value)}
                                         required
-                                        aria-aria-invalid={validlastnameUser ? "false" : "true"}
+                                        aria-invalid={validlastnameUser ? "false" : "true"}
                                         aria-describedby="uidnote"
                                         onFocus={() => setLastnameUserFocus(true)}
                                         onBlur={() => setLastnameUserFocus(false)}
@@ -316,13 +364,13 @@ className="form-control"
                                     </label>
                                     <input
                                         className="form-control"
-                                        type="mail"
-                                        name="mail"
+                                        type="text"
+                                        name="email"
                                         ref={userRef}
                                         autoComplete="off"
                                         onChange={(e) => setMailUser(e.target.value)}
                                         required
-                                        aria-aria-invalid={validMail ? "false" : "true"}
+                                        aria-invalid={validMail ? "false" : "true"}
                                         aria-describedby="uidnote"
                                         onFocus={() => setMailUserFocus(true)}
                                         onBlur={() => setMailUserFocus(false)}
@@ -404,7 +452,7 @@ className="form-control"
                                         autoComplete="off"
                                         onChange={(e) => setMobile(e.target.value)}
                                         required
-                                        aria-aria-invalid={validMobile ? "false" : "true"}
+                                        aria-invalid={validMobile ? "false" : "true"}
                                         aria-describedby="uidnote"
                                         onFocus={() => setMobileFocus(true)}
                                         onBlur={() => setMobileFocus(false)}

@@ -58,7 +58,7 @@ const Home = () => {
       </section>
 
       {/* Section Projets de l'annee | Top 3 projets*/}
-      <section class="information">
+      <section class="information p-3 m-0 border-0 bd-example m-0 border-0">
         <div class="row">
           <div class="col-sm-12 col-md-6 col-lg-4">
             <div class="card product-card">
@@ -142,28 +142,37 @@ const Home = () => {
             <div className="marquee-inner-wrapper card-wrapper">
               <Marquee className="d-flex">
                 <div className="mx-4 w-25">
-                  <img src="images/brand-01.png" alt="brand" />
-                </div>
-                <div className="mx-4 w-25">
-                  <img src="images/brand-02.png" alt="brand" />
-                </div>
-                <div className="mx-4 w-25">
-                  <img src="images/brand-03.png" alt="brand" />
-                </div>
-                <div className="mx-4 w-25">
-                  <img src="images/brand-04.png" alt="brand" />
-                </div>
-                <div className="mx-4 w-25">
-                  <img src="images/brand-05.png" alt="brand" />
-                </div>
-                <div className="mx-4 w-25">
-                  <img src="images/brand-06.png" alt="brand" />
-                </div>
-                <div className="mx-4 w-25">
                   <img src="images/brand-07.png" alt="brand" />
                 </div>
                 <div className="mx-4 w-25">
-                  <img src="images/brand-08.png" alt="brand" />
+                  <svg xmlns="http://www.w3.org/2000/svg" aria-label='myNkwa brnd'>
+                    <g transform="translate(241.982 94.476)">
+                      <path d="M-68.426-93.964A107.641,107.641,0,0,1-171.333-1.705,93.052,93.052,0,0,1-78.28-94.476,96.964,96.964,0,0,1-68.426-93.964Z" fill="#2fb28f"></path>
+                      <path d="M-174.986-2.564c0,.281,0,.578-.017.859a67.088,67.088,0,0,1-66.979-63.639c1.356-.082,2.712-.132,4.084-.132A62.911,62.911,0,0,1-174.986-2.564Z" fill="#2fb28f">
+                      </path>
+                    </g>
+                  </svg>
+                </div>
+                <div className="mx-4 w-25">
+                  <img src="images/brand-09.png" alt="Mboa Digital brand" />
+                </div>
+                <div className="mx-4 w-25">
+                  <img src="images/brand-10.png" alt="Cotco brand" />
+                </div>
+                <div className="mx-4 w-25">
+                  <img src="images/brand-11.png" alt="CBC BANK brand" />
+                </div>
+                <div className="mx-4 w-25">
+                  <img src="images/brand-12.png" alt="5NKAP brand" />
+                </div>
+                <div className="mx-4 w-25">
+                  <img src="images/brand-13.jpg" alt="Broli brand" />
+                </div>
+                <div className="mx-4 w-25">
+                  <img src="images/brand-14.png" alt="Waspito brand" style={{ backgroundColor: "limegreen" }} />
+                </div>
+                <div className="mx-4 w-25">
+                  <img src="images/brand-15.png" alt="Digital Square brand" style={{ backgroundColor: "#0076a4" }} />
                 </div>
               </Marquee>
             </div>

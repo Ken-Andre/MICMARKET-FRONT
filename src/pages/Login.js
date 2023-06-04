@@ -1,16 +1,19 @@
-import { React, useEffect, useRef, useState } from "react";
+import { React, useEffect, useRef, useState, useContext } from "react";
 // import { Link } from "react-router-dom";
 import { NavLink, useNavigate } from "react-router-dom";
 import BreadCrumb from "../components/BreadCrumb";
 import Meta from "../components/Meta";
+import axios from "axios";
+import AuthContext from "../context/AuthProvider";
 
 
-const LOGIN_URL = 'http://127.0.0.1:5000/api/user/login';
-const DELAY_BEF_MOVE = 2500;
+const LOGIN_URL = 'http://192.168.1.102:5000/api/user/login';
+const DELAY_BEF_MOVE = 1500;
 const Login = () => {
-  const userRef = useRef();
+  const { setAuth } = useContext(AuthContext);
+  // const userRef = useRef();
   const errRef = useRef();
-  const successRef = useRef();
+  const succRef = useRef();
   const navigate = useNavigate();
 
   const [mailUser, setMailUser] = useState('');
@@ -62,61 +65,93 @@ const Login = () => {
       email: mailUser,
       password: pwdUser,
     };
-    fetch(LOGIN_URL, {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify(payload)
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error("Failed to send! \n Verify Your Network Connection !");
-        }
-        else if (response.status === 500){
-          if (response.json().message === 'Invalid Credentials !'){
-            setErrMsg('Invalid Email or password');
-          }
-          else{
-            setErrMsg('Invalid Credentials');
-          }
-        }
-        else {
-          setErrMsg('');
-          setSuccess(true);
-          setMailUser('');
-          setPwdUser('');
-          setTimeout(() => {
-            navigate.pushState('/');
-          }, DELAY_BEF_MOVE);
+    // fetch(LOGIN_URL, {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-type": "application/json",
+    //   },
+    //   body: JSON.stringify(payload)
+    // })
+    //   .then(response => {
+    //     if (!response.ok) {
+    //       if (response.status === 500) {
+    //         console.log(response, "& ", response.status);
 
-        }
-        return response.json(); // extract JSON response from response object
-      })
-      .then(data => {
-        console.log('Server Response:', data);
-        if (data.message === 'Invalid Credentials !') {
-          setErrMsg('Invalid Email or pwd');
-        } else {
-          setErrMsg('Login Failed');
-        }
-        errRef.current.focus();
-      })
-      .catch(err => {
-        console.log('Error:', err);
-        if (err.response?.status === 500) {
-          setErrMsg('Login Failed');
-        } else {
-          setErrMsg(err.message || 'Invalid Email or password');
-        }
-        errRef.current.focus();
-      });
+    //         setErrMsg('Incorrect Password or Username');
+
+    //       }
+    //       else {
+    //         setErrMsg('Invalid Credentials');
+    //       }
+    //       // throw new Error("Failed to send! \n Verify Your Network Connection !");
+    //     }
+    //     else {
+    //       setErrMsg('');
+    //       setSuccess(true);
+    //       setMailUser('');
+    //       setPwdUser('');
+    //       setTimeout(() => {
+    //         navigate('/signin');
+    //       }, DELAY_BEF_MOVE);
+
+    //     }
+    //     return response.json(); // extract JSON response from response object
+    //   })
+    //   .then(data => {
+    //     console.log('Server Response:', data);
+    //     if (data.message === 'Invalid Credentials !') {
+    //       setErrMsg('Invalid Email or pwd');
+    //     }
+    //     errRef.current && errRef.current.focus();
+    //   })
+    //   .catch(err => {
+    //     console.log('Error:', err);
+    //     if (!err === "") {
+    //       setErrMsg('No Server Response');
+    //     } else {
+    //       setErrMsg( 'Invalid Email or password');
+    //     }
+    //     errRef.current && errRef.current.focus();
+    //   });
+    try {
+      const response = await axios.post(LOGIN_URL,
+        JSON.stringify(payload),
+        {
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: true
+
+        });
+      console.log(JSON.stringify(response?.data));
+      const accessToken = response.data?.token;
+      const role = response.data?.role;
+      setAuth({ mailUser, pwdUser, role, accessToken });
+      setMailUser('');
+      setPwdUser('');
+      setSuccess(true);
+    }
+    catch (err) {
+      if (!err?.response) {
+        setErrMsg('No Server Response');
+      } else if (err.response.status === 400) {
+        setErrMsg('Missing Username or Password');
+      } else if (err.response.status === 401) {
+        setErrMsg('You\'re not recognized');
+      }
+      else {
+        setErrMsg('Login Failed');
+      }
+      errRef.current && errRef.current.focus();
+    }
+    // if (errMsg !== "") {
+    //   setSuccess(false); //Il y'a un petit pb
+    //   console.log("Nouvel etat success: ", success);
+    // }
   }
 
   return (
     <>
-      <Meta title={"Login"} />
-      <BreadCrumb title="Login" />
+      <Meta title={"Login" } />
+      <BreadCrumb title={"Login"} />
       <div className="login-wrapper py-5 home-wrapper-2">
         <div className="row">
           <div className="col-12">
@@ -125,10 +160,11 @@ const Login = () => {
               {errMsg && (
                 <p ref={errRef} className="errmsg" aria-live="assertive">
                   {errMsg}
+
                 </p>
               )}
               {success && (
-                <p ref={successRef} className="successmsg" aria-live="assertive">
+                <p ref={succRef} className="successmsg" aria-live="assertive">
                   Data has been saved successfully!
                 </p>
               )}
