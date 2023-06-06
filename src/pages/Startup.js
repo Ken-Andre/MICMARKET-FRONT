@@ -17,7 +17,7 @@ const TEL_REGEX = /^((?=.{8,}$)[2-3-6]{1}((\s)|(-)?){0,1}([0-9]{2})((\s)|(-)?){0
 const REGISTER_URL = 'http://192.168.2.132:5000/api/user/register';
 const DELAY_SIGNTOLOG = 3500;
 
-const Signin = () => {
+const Startup = () => {
     //Toutes mes useState +useEffect debut
 
     const userRef = useRef();
@@ -123,7 +123,6 @@ const Signin = () => {
     // Je dois ajouter user, en haut
     //Toutes mes useState +useEffect debut
 
-    //Function for Post Submit form
     const handleSubmit = async (e) => {
         e.preventDefault();
         // if button enabled with JS hack
@@ -137,34 +136,7 @@ const Signin = () => {
             setErrMsg("Invalid Entry");
             return;
         }
-        // try {
-        //     const response = await axios.post(REGISTER_URL,
-        //         JSON.stringify({ user, pwd }),
-        //         {
-        //             headers: { 'Content-Type': 'application/json' },
-        //             withCredentials: true
-        //         }
-        //     );
-        //     console.log(response?.data);
-        //     console.log(response?.accessToken);
-        //     console.log(JSON.stringify(response))
-        //     setSuccess(true);
-        //     //clear state and controlled inputs
-        //     //need value attrib on inputs for this
-        //     setUser('');
-        //     setPwd('');
-        //     setMatchPwd('');
-        // } catch (err) {
-        //     if (!err?.response) {
-        //         setErrMsg('No Server Response');
-        //     } else if (err.response?.status === 409) {
-        //         setErrMsg('Username Taken');
-        //     } else {
-        //         setErrMsg('Registration Failed')
-        //     }
-        //     errRef.current && errRef.current.focus();
-        // }
-        //else {
+
         const payload = {
             // user: user,
             firstname: nameUser,
@@ -238,16 +210,15 @@ const Signin = () => {
 
     }
 
-
     return (
         <>
             {/* Some visual things */}
-            <Meta title={"Signin"} className={"Signin"} />
+            <Meta title={"Singin Startup"} className={"Signin"} />
 
-            <BreadCrumb title={"Signin"} />
+            <BreadCrumb title={"Signin"}  />
             <div className="login-wrapper py-5 home-wrapper-2 ">
                 {/* Ici */}
-                {/* <BreadCrumb title={"Signin"} /> */}
+
                 <div className="row">
                     <div className="col-12">
                         <div className=" form-signin  m-auto w-75 rounded-box-white">
@@ -258,7 +229,7 @@ const Signin = () => {
                                 </p>
                             )}
                             {success && (
-                                <p ref={succRef} className="successmsg" aria-live="assertive">
+                                <p ref={succRef}  className="successmsg" aria-live="assertive">
                                     Data has been saved successfully!
                                 </p>
                             )}
@@ -465,16 +436,6 @@ className="form-control"
                                 </div>
                                 {/* Fin Input Mobile */}
                                 <div className="d-flex justify-content-center">
-                                    <p className="text-gray fs-7">
-                                        En cliquant sur ce boutton, vous acceptez d'avoir lu nos
-                                        <span className="line">
-                                            <NavLink to="/terms" className="fw-medium text-primary text-opacity-75 ">
-                                                conditions d'utilisations
-                                            </NavLink>
-                                        </span>
-                                    </p>
-                                </div>
-                                <div className="d-flex justify-content-center">
                                     <button className="btn btn-lg btn-primary form-control border-0 mb-2" disabled={!validPwd || !validMatch ? true : false}>Sign Up</button>
                                 </div>
                                 {/* !validName || */}
@@ -498,4 +459,4 @@ className="form-control"
     )
 }
 
-export default Signin;
+export default Startup;

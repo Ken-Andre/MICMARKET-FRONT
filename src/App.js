@@ -12,7 +12,8 @@ import SingleProduct from './pages/SingleProduct';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Signin from './pages/Signin';
-
+import Startup from './pages/Startup';
+import TermsAndConditions from './pages/TermsAndConditions';
 
 
 
@@ -23,21 +24,29 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
+          {/* Public Section */}
           <Route path="/" element={<MLayout />}>
             <Route index element={<Home />} />
             <Route path="about" element={<About />} />
             <Route path="contact" element={<Contact />} />
-            <Route path="category" element={<OurStore />} />
-            <Route path="category/:id" element={<SingleProduct />} />
+            <Route path="categories" element={<OurStore />} />
+            <Route path="startup/:id" element={<SingleProduct />} />
+            <Route path="terms" element={<TermsAndConditions />} />
 
             {/* <Route path="forgot" element={<Forgot />} /> */}
 
           </Route>
+          {/* Auth Section */}
           <Route path="/login" element={<Login />} />
-          <Route path="/signin" element={<Signin />}>
-            <Route path="forgot" element={<Forgot />} />
+          <Route path="/signup" element={<Signup />}>
+            <Route index element={<Signin />} />
+            <Route path='startup' element={<Startup />} />
           </Route>
+          {/* Startup Section */}
 
+          {/* User Section */}
+
+          {/* Admin Section */}
           <Route path="/m" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="about" element={<About />} />

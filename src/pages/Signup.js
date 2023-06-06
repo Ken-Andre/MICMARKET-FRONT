@@ -1,15 +1,15 @@
 import React from "react";
 import BreadCrumb from "../components/BreadCrumb";
 import Meta from "../components/Meta";
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 
 
 const Signup = () => {
   return (
     <>
-      <Meta title={"Sign Up"} />
-      <BreadCrumb title="Sign Up" />
-      <div className="login-wrapper py-5 home-wrapper-2">
+      {/* <Meta title={"Sign Up"} /> */}
+
+      {/* <div className="login-wrapper py-5 home-wrapper-2">
         <div className="row">
           <div className="col-12">
             <div className="auth-card">
@@ -44,6 +44,10 @@ const Signup = () => {
             </div>
           </div>
         </div>
+      </div> */}
+      <div className="container-xxl gradial-background">
+        {/* <BreadCrumb title="Sign Up" /> */}
+        <Outlet />
       </div>
     </>
   );
