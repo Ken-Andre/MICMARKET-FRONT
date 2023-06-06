@@ -1,28 +1,161 @@
 import React from 'react'
-import { Link } from "react-router-dom";
+import { NavLink,Link } from "react-router-dom";
 import Marquee from 'react-fast-marquee';
 import ProductCard from '../components/ProductCard';
+import TopProject from '../components/TopProject';
+
+import { animate, motion } from "framer-motion"
 
 const Home = () => {
+  // Element(s)
+  //const box = document.getElementById("box");
+
+  //animate(box, { opacity: 0 }, { duration: 0.5 });
+
+  // Selectors
+  //animate("div", { x: [0, 100] }, { type: "spring" });
   return (
     <>
       {/* Section pour un welcome avec image en background et un effet de vitre noir */}
-      <div className='untree-hero-container'>
+      {/* <div className='untree-hero-container'>
         <div className=' untree-subcontainer'>
           <div className='row align-items-center'>
             <div className='text-white text-center position-absolute top-50 start-50 translate-middle'>
-              <h1 className='welcome-text '> {/* fw-bold fs-4 fs-xl-5 */}
+              <h1 className='welcome-text '> {/* fw-bold fs-4 fs-xl-5 *\/}
                 Participez à la croissance des startups locaux et internationaux !
               </h1>
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
+      <motion.div className="untree-hero-container" layout initial={{ height: 0, scale: 0 }}
+        animate={{ height: "unset", scale: 1 }}
+        transition={{
+          delay: -0.3, duration: 0.8, type: "fade"
+          //type: "spring",
+          //stiffness: 260,
+          //damping: 20
+        }}>
+        <div className=" untree-subcontainer">
+          <div className="row align-items-center">
+            {/* <!-- Example Code --> */}
+
+            <div
+              id="carouselExampleAutoplaying"
+              class="carousel slide carousel-fade"
+              data-bs-ride="carousel"
+            >
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                  <img
+                    class="bd-placeholder-img bd-placeholder-img-lg d-block w-100"
+                    width="800"
+                    height="500"
+                    src='/images/ani-kolleshi-medical.jpg'
+                    // xmlns="http://www.w3.org/2000/svg"
+                    // role="img"
+                    aria-label="Placeholder: First slide"
+                  // preserveAspectRatio="xMidYMid slice"
+                  // focusable="false"
+                  />
+
+                  {/* </svg> */}
+                </div>
+                <div class="carousel-item">
+                  <img
+                    class="bd-placeholder-img bd-placeholder-img-lg d-block w-100"
+                    width="800"
+                    height="500"
+                    src='images/nathan-dumlao-fintech.jpg'
+                    // xmlns="http://www.w3.org/2000/svg"
+                    // role="img"
+                    aria-label="Placeholder: Second slide"
+                  // preserveAspectRatio="xMidYMid slice"
+                  // focusable="false"
+                  />
+
+                  {/* </svg> */}
+                </div>
+                <div class="carousel-item">
+                  <img
+                    class="bd-placeholder-img bd-placeholder-img-lg d-block w-100"
+                    width="800"
+                    height="500"
+                    src='images/jessica-felicio-cosmetics.jpg'
+                    // xmlns="http://www.w3.org/2000/svg"
+                    // role="img"
+                    aria-label="Placeholder: Third slide"
+                  // preserveAspectRatio="xMidYMid slice"
+                  // focusable="false"
+                  />
+                  {/* <title>Placeholder</title>
+                    <rect width="100%" height="100%" fill="#555"></rect>
+                  </svg> */}
+                </div>
+                <div class="carousel-item">
+                  <img
+                    class="bd-placeholder-img bd-placeholder-img-lg d-block w-100"
+                    width="800"
+                    height="500"
+                    src='images/possessed-photography-robotics.jpg'
+                    // xmlns="http://www.w3.org/2000/svg"
+                    // role="img"
+                    aria-label="Placeholder: Third slide"
+                  // preserveAspectRatio="xMidYMid slice"
+                  // focusable="false"
+                  />
+                  {/* <title>Placeholder</title>
+                    <rect width="100%" height="100%" fill="#555"></rect>
+                  </svg> */}
+                </div>
+              </div>
+              <button
+                class="carousel-control-prev"
+                type="button"
+                data-bs-target="#carouselExampleAutoplaying"
+                data-bs-slide="prev"
+              >
+                <span
+                  class="carousel-control-prev-icon"
+                  aria-hidden="true"
+                ></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button
+                class="carousel-control-next"
+                type="button"
+                data-bs-target="#carouselExampleAutoplaying"
+                data-bs-slide="next"
+              >
+                <span
+                  class="carousel-control-next-icon"
+                  aria-hidden="true"
+                ></span>
+                <span class="visually-hidden">Next</span>
+              </button>
+            </div>
+            <div
+              className="welcome-text text-white text-center position-absolute top-50 start-50 translate-middle"
+            >
+              <h1 className="welcome-text ">
+                Participez à la croissance des startups locaux et internationaux !
+              </h1>
+            </div>
+          </div>
+        </div>
+      </motion.div>
       {/* Fin Section pour un welcome avec image en background et un effet de vitre noir*/}
 
       {/* Section Information */}
-      <section class="information">
-        <div class="container">
+      <section className="information">
+        <motion.div className="container flex" layout initial={{ height: 0, scale: 0 }}
+          animate={{ height: "unset", scale: 1 }}
+          transition={{
+            delay: 0.5, duration: 1.1, type: "fade"
+            //type: "spring",
+            //stiffness: 260,
+            //damping: 20
+          }}>
           <div class="row info-1">
             {/* <!-- Text info--> */}
             <div class="col-md-6">
@@ -54,12 +187,13 @@ const Home = () => {
 
           </div>
 
-        </div>
+        </motion.div>
       </section>
 
       {/* Section Projets de l'annee | Top 3 projets*/}
-      <section class="information p-3 m-0 border-0 bd-example m-0 border-0">
-        <div class="row">
+      <section className="information p-3 m-0 border-0 bd-example">
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+          {/*
           <div class="col-sm-12 col-md-6 col-lg-4">
             <div class="card product-card">
 
@@ -77,7 +211,7 @@ const Home = () => {
               </div>
               <div class="card-footer">
                 <div class="stars">
-                  {/* <!-- Composant React Star avec une valeur aléatoire entre 3.8 et 5 --> */}
+                  {/* <!-- Composant React Star avec une valeur aléatoire entre 3.8 et 5 --> *\/}
                 </div>
                 <a href="#">Voir Plus</a>
               </div>
@@ -100,7 +234,7 @@ const Home = () => {
               </div>
               <div class="card-footer">
                 <div class="stars">
-                  {/* <!-- Composant React Star avec une valeur aléatoire entre 3.8 et 5 --> */}
+                  {/* <!-- Composant React Star avec une valeur aléatoire entre 3.8 et 5 --> *\/}
                 </div>
                 <a href="#">Voir Plus</a>
               </div>
@@ -123,12 +257,21 @@ const Home = () => {
               </div>
               <div class="card-footer">
                 <div class="stars">
-                  {/* <!-- Composant React Star avec une valeur aléatoire entre 3.8 et 5 --> */}
+                  {/* <!-- Composant React Star avec une valeur aléatoire entre 3.8 et 5 --> *\/}
                 </div>
                 <a href="#">Voir Plus</a>
               </div>
             </div>
-          </div>
+  </div>*/}
+          <TopProject imgSrc="images/ejara.png" alt="Ejara Brand" cardTitle="Ejara" className="product-card" href="#" >
+            Ejara est une entreprise dans la cryptomonnaie proposant des services d'epargne pour foyers.
+          </TopProject>
+          <TopProject imgSrc="images/ejara.png" alt="Ejara Brand" cardTitle="Ejara" className="product-card" href="#" >
+            Ejara est une entreprise dans la cryptomonnaie proposant des services d'epargne pour foyers.
+          </TopProject>
+          <TopProject imgSrc="images/ejara.png" alt="Ejara Brand" cardTitle="Ejara" className="product-card" href="#" >
+            Ejara est une entreprise dans la cryptomonnaie proposant des services d'epargne pour foyers.
+          </TopProject>
         </div>
       </section>
 
@@ -142,10 +285,10 @@ const Home = () => {
             <div className="marquee-inner-wrapper card-wrapper">
               <Marquee className="d-flex">
                 <div className="mx-4 w-25">
-                  <img src="images/brand-07.png" alt="brand" />
+                  <img src="images/brand-07.png" alt="Samsung brand" />
                 </div>
                 <div className="mx-4 w-25">
-                  <svg xmlns="http://www.w3.org/2000/svg" aria-label='myNkwa brnd'>
+                  <svg xmlns="http://www.w3.org/2000/svg" aria-label='myNkwa brand'>
                     <g transform="translate(241.982 94.476)">
                       <path d="M-68.426-93.964A107.641,107.641,0,0,1-171.333-1.705,93.052,93.052,0,0,1-78.28-94.476,96.964,96.964,0,0,1-68.426-93.964Z" fill="#2fb28f"></path>
                       <path d="M-174.986-2.564c0,.281,0,.578-.017.859a67.088,67.088,0,0,1-66.979-63.639c1.356-.082,2.712-.132,4.084-.132A62.911,62.911,0,0,1-174.986-2.564Z" fill="#2fb28f">
@@ -189,7 +332,7 @@ const Home = () => {
               <div class="desc">
                 <h3>Projet/Startup</h3>
                 <p>Créer un compte pour startup</p>
-                <a href="#" class="btn btn-primary"><i class="fas fa-arrow-right"></i> Bouton</a>
+                <NavLink to="/signup" className="btn btn-primary"><i class="fas fa-arrow-right"></i> S'inscrire</NavLink>
               </div>
             </div>
             <div class="col-md-4 bottom-gap-md">
@@ -197,16 +340,16 @@ const Home = () => {
               <div class="desc">
                 <h3>Investisseur</h3>
                 <p>Créer un compte</p>
-                <a href="#" class="btn btn-primary"><i class="fas fa-arrow-right"></i> Bouton</a>
-              </div>
+                <NavLink to="/signup" className="btn btn-primary"><i class="fas fa-arrow-right"></i> S'inscrire</NavLink>
+                            </div>
             </div>
             <div class="col-md-4 bottom-gap-md">
               <img src="images/icons-1.svg" alt="Description de l'image" />
               <div class="desc">
                 <h3>Banque</h3>
-                <p>Créer un compte en tant que Banque</p>
-                <a href="#" class="btn btn-primary"><i class="fas fa-arrow-right"></i> Bouton</a>
-              </div>
+                <p>Etablir un partenariat</p>
+                <NavLink to="/contact" className="btn btn-primary"><i class="fas fa-arrow-right"></i> Cliquez ici </NavLink>
+                 </div>
             </div>
           </div>
         </div>
@@ -277,4 +420,4 @@ const Home = () => {
 
 }
 
-export default Home
+export default Home;

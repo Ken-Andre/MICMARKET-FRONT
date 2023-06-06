@@ -8,42 +8,95 @@ const OurStore = () => {
     // alert(grid);
     return (
         <>
-            <Meta title={''} />
+            <Meta title={'Browse Startup'} />
             {/* <BreadCrumb title="Our Store" /> */}
             <div className='store-wrapper home-wrapper-2' style={{ backgroundColor: "antiquewhite" }}>
                 <div className='container-xxl'>
                     <div className='row'>
                         <div className='col-3'>
-                            <div className='filter-card mb-3'>
+                            {/* The top filter */}
+                            {/* <div className='filter-card mb-3'>
                                 <h3 className='filter-title'>
                                     Shop By Categories
                                 </h3>
                                 <div>
                                     <ul className='ps-0'>
-                                        <li>FinTech</li>
-                                        <li>LegalTech</li>
-                                        <li>CleanTech</li>
-                                        <li>GreenTech</li>
-                                        <li>BioTech</li>
+
                                     </ul>
                                 </div>
-                            </div>
+                            </div> */}
                             {/* Filter by */}
                             <div className='filter-card mb-3'>
                                 <h3 className='filter-title'>Filter By</h3>
                                 <div>
-                                    <h5 className="sub-title">Type</h5>
+                                    <h5 className="sub-title">Categories</h5>
                                     <div>
-                                        {/* 01- Aliments,boisson & tabac */}
+                                        <div className='form-check'>
+                                            <input
+                                            className="form-check-input"
+                                            type="checkbox"
+                                            value="1"
+                                            id="FinTech"
+                                            />
+
+                                            <label className='form-check-label' htmlFor=''>
+                                                FinTech
+                                            </label>
+                                        </div>
+                                        <div className='form-check'>
+                                            <input
+                                            className="form-check-input"
+                                            type="checkbox"
+                                            value="2"
+                                            id=""
+                                            />
+                                            <label className='form-check-label' htmlFor=''>
+                                                LegalTech
+                                            </label>
+                                        </div>
+                                        <div className='form-check'>
+                                            <input
+                                            className="form-check-input"
+                                            type="checkbox"
+                                            value="3"
+                                            id=""
+                                            />
+                                            <label className='form-check-label' htmlFor=''>
+                                                CleanTech
+                                            </label>
+                                        </div>
+                                        <div className='form-check'>
+                                            <input
+                                            className="form-check-input"
+                                            type="checkbox"
+                                            value="4"
+                                            id=""
+                                            />
+                                            <label className='form-check-label' htmlFor=''>
+                                                GreenTech
+                                            </label>
+                                        </div>
+                                        <div className='form-check'>
+                                            <input
+                                            className="form-check-input"
+                                            type="checkbox"
+                                            value="5"
+                                            id=""
+                                            />
+                                            <label className='form-check-label' htmlFor=''>
+                                                BioTech
+                                            </label>
+                                        </div>
+                                        {/*5+ 01- Aliments,boisson & tabac */}
                                         <div className="form-check">
                                             <input
                                                 className="form-check-input"
                                                 type="checkbox"
-                                                value=""
+                                                value="6"
                                                 id=""
                                             />
-                                            <label className="form-check-label" htmlFor="">
-                                                Aliments,boisson & tabac
+                                            <label className="form-check-label" htmlFor="Agroalimentaire">
+                                                Agroalimentaire
                                             </label>
                                         </div>
                                         {/*02- Loisirs & artisanat */}
@@ -51,7 +104,7 @@ const OurStore = () => {
                                             <input
                                                 className="form-check-input"
                                                 type="checkbox"
-                                                value=""
+                                                value="7"
                                                 id=""
                                             />
                                             <label className="form-check-label" htmlFor="">
@@ -63,7 +116,7 @@ const OurStore = () => {
                                             <input
                                                 className="form-check-input"
                                                 type="checkbox"
-                                                value=""
+                                                value="8"
                                                 id=""
                                             />
                                             <label className="form-check-label" htmlFor="">
@@ -75,7 +128,7 @@ const OurStore = () => {
                                             <input
                                                 className="form-check-input"
                                                 type="checkbox"
-                                                value=""
+                                                value="9"
                                                 id=""
                                             />
                                             <label className="form-check-label" htmlFor="">
@@ -87,7 +140,7 @@ const OurStore = () => {
                                             <input
                                                 className="form-check-input"
                                                 type="checkbox"
-                                                value=""
+                                                value="10"
                                                 id=""
                                             />
                                             <label className="form-check-label" htmlFor="">
@@ -99,7 +152,7 @@ const OurStore = () => {
                                             <input
                                                 className="form-check-input"
                                                 type="checkbox"
-                                                value=""
+                                                value="11"
                                                 id=""
                                             />
                                             <label className="form-check-label" htmlFor="">
@@ -111,7 +164,7 @@ const OurStore = () => {
                                             <input
                                                 className="form-check-input"
                                                 type="checkbox"
-                                                value=""
+                                                value="12"
                                                 id=""
                                             />
                                             <label className="form-check-label" htmlFor="">
@@ -123,7 +176,7 @@ const OurStore = () => {
                                             <input
                                                 className="form-check-input"
                                                 type="checkbox"
-                                                value=""
+                                                value="13"
                                                 id=""
                                             />
                                             <label className="form-check-label" htmlFor="">
@@ -135,7 +188,7 @@ const OurStore = () => {
                                             <input
                                                 className="form-check-input"
                                                 type="checkbox"
-                                                value=""
+                                                value="14"
                                                 id=""
                                             />
                                             <label className="form-check-label" htmlFor="">
@@ -147,7 +200,7 @@ const OurStore = () => {
                                             <input
                                                 className="form-check-input"
                                                 type="checkbox"
-                                                value=""
+                                                value="15"
                                                 id=""
                                             />
                                             <label className="form-check-label" htmlFor="">
@@ -159,7 +212,7 @@ const OurStore = () => {
                                             <input
                                                 className="form-check-input"
                                                 type="checkbox"
-                                                value=""
+                                                value="16"
                                                 id=""
                                             />
                                             <label className="form-check-label" htmlFor="">
@@ -171,7 +224,7 @@ const OurStore = () => {
                                             <input
                                                 className="form-check-input"
                                                 type="checkbox"
-                                                value=""
+                                                value="17"
                                                 id=""
                                             />
                                             <label className="form-check-label" htmlFor="">
@@ -183,7 +236,7 @@ const OurStore = () => {
                                     <div className="d-flex align-items-center gap-10">
                                         <div className="form-floating">
                                             <input
-                                                type="email"
+                                                type="number"
                                                 className="form-control"
                                                 id="floatingInput"
                                                 placeholder="From"
@@ -192,7 +245,7 @@ const OurStore = () => {
                                         </div>
                                         <div className="form-floating">
                                             <input
-                                                type="email"
+                                                type="number"
                                                 className="form-control"
                                                 id="floatingInput1"
                                                 placeholder="To"
@@ -266,9 +319,6 @@ const OurStore = () => {
                             </div>
                             <div className='product-list pb-5'>
                                 {/* LISTE PRODUITS DIV */}
-                                <ProductCard grid={grid} />
-                                <ProductCard grid={grid} />
-                                <ProductCard grid={grid} />
                                 <ProductCard grid={grid} />
                             </div>
                         </div>
