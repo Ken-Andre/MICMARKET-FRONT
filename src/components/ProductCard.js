@@ -9,6 +9,9 @@ import { Link, useLocation } from "react-router-dom";
 // const addcart = "images/add-cart.svg";
 // const view = "images/view.svg";
 
+const getGames = async () => {
+  const res = await fetch(`https://rawg.io/api/games?key=${process.env.RAWG}`)
+}
 
 const ProductCard = () => {
   // const { grid } = props;
@@ -31,7 +34,7 @@ const ProductCard = () => {
       <div >
 
         <div class="card product-card">
-          <a href="/startup/ant-editions" class="card-link">
+          <a href="/startup/ant-editions " class="card-link">
             {/* <div class="badge badge-primary">Le plus pertinent</div> */}
             <div>
               <img src="images/image_google.png" class="img-fluid rounded-circle mr-2" alt="" />
