@@ -245,7 +245,7 @@ const Signin = () => {
             <Meta title={"Signin"} className={"Signin"} />
 
             <BreadCrumb title={"Signin"} />
-            <div className="login-wrapper py-5 home-wrapper-2 ">
+            <div className="login-wrapper py-5 home-wrapper-2 container-lg">
                 {/* Ici */}
                 {/* <BreadCrumb title={"Signin"} /> */}
                 <div className="row">
@@ -468,7 +468,7 @@ className="form-control"
                                     <p className="text-gray fs-7">
                                         En cliquant sur ce boutton, vous acceptez d'avoir lu nos
                                         <span className="line">
-                                            <NavLink to="/terms" className="fw-medium text-primary text-opacity-75 ">
+                                            <NavLink to="/terms" className="fw-medium text-primary text-opacity-75 left-gap">
                                                 conditions d'utilisations
                                             </NavLink>
                                         </span>
@@ -482,7 +482,7 @@ className="form-control"
                                     Already registered?
                                     <span className="line">
                                         {/*put router link here*/}
-                                        <NavLink to="/login" className="fw-medium text-primary text-opacity-75 left-gap">Login</NavLink>
+                                        <NavLink to="/auth/login" className="fw-medium text-primary text-opacity-75 left-gap">Login</NavLink>
                                     </span>
                                 </p>
                             </form>

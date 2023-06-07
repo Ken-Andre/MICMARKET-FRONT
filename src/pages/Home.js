@@ -332,7 +332,7 @@ const Home = () => {
               <div class="desc">
                 <h3>Projet/Startup</h3>
                 <p>Créer un compte pour startup</p>
-                <NavLink to="/signup" className="btn btn-primary"><i class="fas fa-arrow-right"></i> S'inscrire</NavLink>
+                <NavLink to="/auth/startup" className="btn btn-primary"><i class="fas fa-arrow-right"></i> S'inscrire</NavLink>
               </div>
             </div>
             <div class="col-md-4 bottom-gap-md">
@@ -340,8 +340,8 @@ const Home = () => {
               <div class="desc">
                 <h3>Investisseur</h3>
                 <p>Créer un compte</p>
-                <NavLink to="/signup" className="btn btn-primary"><i class="fas fa-arrow-right"></i> S'inscrire</NavLink>
-                            </div>
+                <NavLink to="/auth/signup" className="btn btn-primary"><i class="fas fa-arrow-right"></i> S'inscrire</NavLink>
+              </div>
             </div>
             <div class="col-md-4 bottom-gap-md">
               <img src="images/icons-1.svg" alt="Description de l'image" />

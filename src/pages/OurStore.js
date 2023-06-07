@@ -1,11 +1,46 @@
-import React, { useState } from 'react';
-//import BreadCrumb from '../components/BreadCrumb';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import Meta from '../components/Meta';
 import ProductCard from '../components/ProductCard';
+import Slider from '@mui/material/Slider';
+
 
 const OurStore = () => {
     const [grid, setGrid] = useState(2);
-    // alert(grid);
+    const [minPrice, setMinPrice] = useState(10);
+    const [maxPrice, setMaxPrice] = useState(1000000);
+
+    const [games, setGames] = useState([]);
+    const [filteredGames, setFilteredGames] = useState([]);
+    const [priceRange, setPriceRange] = useState([]);
+
+    useEffect(() => {
+        // Fetch the games data from the API
+        axios.get(`https://rawg.io/api/games?key=${process.env.REACT_APP_RAWG}`)
+        .then(response => {
+            setGames(response.data);
+            setFilteredGames(games.filter((game) => {
+                const price = game.price || 0;
+                return price >= priceRange[0] && price <= priceRange[1];
+            }));
+        });
+
+        // .catch(error => {
+        //     console.error(error);
+        // });
+    }, []);
+
+    // Filter the games based on the price range
+    // const filteredGames = games && games.filter((game) => {
+    //     const price = game.price || 0;
+    //     return price >= priceRange[0] && price <= priceRange[1];
+    // });
+
+    // Filter function to filter products based on price
+    // const filteredProducts = products.filter((product) => {
+    //     return product.price >= minPrice && product.price <= maxPrice;
+    // });
+
     return (
         <>
             <Meta title={'Browse Startup'} />
@@ -33,10 +68,10 @@ const OurStore = () => {
                                     <div>
                                         <div className='form-check'>
                                             <input
-                                            className="form-check-input"
-                                            type="checkbox"
-                                            value="1"
-                                            id="FinTech"
+                                                className="form-check-input"
+                                                type="checkbox"
+                                                value="1"
+                                                id="FinTech"
                                             />
 
                                             <label className='form-check-label' htmlFor=''>
@@ -45,10 +80,10 @@ const OurStore = () => {
                                         </div>
                                         <div className='form-check'>
                                             <input
-                                            className="form-check-input"
-                                            type="checkbox"
-                                            value="2"
-                                            id=""
+                                                className="form-check-input"
+                                                type="checkbox"
+                                                value="2"
+                                                id=""
                                             />
                                             <label className='form-check-label' htmlFor=''>
                                                 LegalTech
@@ -56,10 +91,10 @@ const OurStore = () => {
                                         </div>
                                         <div className='form-check'>
                                             <input
-                                            className="form-check-input"
-                                            type="checkbox"
-                                            value="3"
-                                            id=""
+                                                className="form-check-input"
+                                                type="checkbox"
+                                                value="3"
+                                                id=""
                                             />
                                             <label className='form-check-label' htmlFor=''>
                                                 CleanTech
@@ -67,10 +102,10 @@ const OurStore = () => {
                                         </div>
                                         <div className='form-check'>
                                             <input
-                                            className="form-check-input"
-                                            type="checkbox"
-                                            value="4"
-                                            id=""
+                                                className="form-check-input"
+                                                type="checkbox"
+                                                value="4"
+                                                id=""
                                             />
                                             <label className='form-check-label' htmlFor=''>
                                                 GreenTech
@@ -78,10 +113,10 @@ const OurStore = () => {
                                         </div>
                                         <div className='form-check'>
                                             <input
-                                            className="form-check-input"
-                                            type="checkbox"
-                                            value="5"
-                                            id=""
+                                                className="form-check-input"
+                                                type="checkbox"
+                                                value="5"
+                                                id=""
                                             />
                                             <label className='form-check-label' htmlFor=''>
                                                 BioTech
@@ -234,7 +269,7 @@ const OurStore = () => {
                                     </div>
                                     <h5 className="sub-title">Price of an Action </h5>
                                     <div className="d-flex align-items-center gap-10">
-                                        <div className="form-floating">
+                                        {/* <div className="form-floating">
                                             <input
                                                 type="number"
                                                 className="form-control"
@@ -251,20 +286,23 @@ const OurStore = () => {
                                                 placeholder="To"
                                             />
                                             <label htmlFor="floatingInput1">To</label>
-                                        </div>
+                                        </div> */}
+                                        <Slider
+                                            value={[minPrice, maxPrice]}
+                                            onChange={(event, newValue) => {
+                                                if (Array.isArray(newValue)) {
+                                                    setMinPrice(newValue[0]);
+                                                    setMaxPrice(newValue[1]);
+                                                }
+                                            }}
+                                            min={10}
+                                            max={1000000}
+                                            valueLabelDisplay="auto"
+                                        />
                                     </div>
                                 </div>
                             </div>
-                            {/* <div className='filter-card mb-3'>
-                                <h3 className='filter-title'>
-                                    Product Tag
-                                </h3>
-                            </div> */}
-                            {/* <div className='filter-card mb-3'>
-                                <h3 className='filter-title'>
-                                    Random Startup
-                                </h3>
-                            </div> */}
+
                         </div>
                         <div className='col-9'>
                             <div className='filter-sort-grid mb-4'>
@@ -290,7 +328,7 @@ const OurStore = () => {
                                         </select>
                                     </div>
                                     <div className='d-flex align-items-center gap-10'>
-                                        <p className='totalproducts mb-0'>{/*Nombre pdt*/} 21 Startups </p>
+                                        <p className='totalproducts mb-0'>{games.length} Startups</p>
                                         <div className='d-flex gap-10 align-items-center grid'>
                                             <img
                                                 onClick={() => {
@@ -319,7 +357,9 @@ const OurStore = () => {
                             </div>
                             <div className='product-list pb-5'>
                                 {/* LISTE PRODUITS DIV */}
-                                <ProductCard grid={grid} />
+                                {/* {filteredProducts.map((product) => ( */}
+                                <ProductCard games={filteredGames}  grid={grid} />
+                                {/* ))} */}
                             </div>
                         </div>
                     </div>

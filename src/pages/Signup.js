@@ -4,7 +4,7 @@ import Meta from "../components/Meta";
 import { Link, Outlet } from "react-router-dom";
 
 
-const Signup = () => {
+const Auth = () => {
   return (
     <>
       {/* <Meta title={"Sign Up"} /> */}
@@ -45,7 +45,7 @@ const Signup = () => {
           </div>
         </div>
       </div> */}
-      <div className="container-xxl gradial-background">
+      <div className=" gradial-background">
         {/* <BreadCrumb title="Sign Up" /> */}
         <Outlet />
       </div>
@@ -53,4 +53,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default Auth;

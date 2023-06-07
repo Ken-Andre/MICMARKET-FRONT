@@ -10,7 +10,7 @@ import Contact from './pages/Contact';
 import OurStore from './pages/OurStore';
 import SingleProduct from './pages/SingleProduct';
 import Login from './pages/Login';
-import Signup from './pages/Signup';
+import Auth from './pages/Signup';
 import Signin from './pages/Signin';
 import Startup from './pages/Startup';
 import TermsAndConditions from './pages/TermsAndConditions';
@@ -37,9 +37,9 @@ function App() {
 
           </Route>
           {/* Auth Section */}
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />}>
-            <Route index element={<Signin />} />
+          <Route path="/auth" element={<Auth />}>
+            <Route path="login" element={<Login />} />
+            <Route path="signup" element={<Signin />} />
             <Route path='startup' element={<Startup />} />
           </Route>
           {/* Startup Section */}
@@ -55,6 +55,9 @@ function App() {
 
           </Route>
         </Routes>
+        {/* <Routes>
+          <Route path="/*" element={<App />} />
+        </Routes> */}
       </BrowserRouter>
     </>
   );

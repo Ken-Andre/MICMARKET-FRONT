@@ -216,7 +216,7 @@ const Startup = () => {
             <Meta title={"Singin Startup"} className={"Signin"} />
 
             <BreadCrumb title={"Signin"}  />
-            <div className="login-wrapper py-5 home-wrapper-2 ">
+            <div className="login-wrapper py-5 home-wrapper-2 container-lg">
                 {/* Ici */}
 
                 <div className="row">
@@ -435,6 +435,16 @@ className="form-control"
                                     </p>
                                 </div>
                                 {/* Fin Input Mobile */}
+                                <div className="d-flex subtiles-warning">
+                                    <p className="text-gray fs-7">
+                                        En cliquant sur ce boutton, vous acceptez d'avoir lu nos
+                                        <span className="line">
+                                            <NavLink to="/terms" className="fw-medium text-primary text-opacity-75 left-gap">
+                                                conditions d'utilisations
+                                            </NavLink>
+                                        </span>
+                                    </p>
+                                </div>
                                 <div className="d-flex justify-content-center">
                                     <button className="btn btn-lg btn-primary form-control border-0 mb-2" disabled={!validPwd || !validMatch ? true : false}>Sign Up</button>
                                 </div>
@@ -443,7 +453,7 @@ className="form-control"
                                     Already registered?
                                     <span className="line">
                                         {/*put router link here*/}
-                                        <NavLink to="/login" className="fw-medium text-primary text-opacity-75 left-gap">Login</NavLink>
+                                        <NavLink to="/auth/login" className="fw-medium text-primary text-opacity-75 left-gap">Login</NavLink>
                                     </span>
                                 </p>
                             </form>
