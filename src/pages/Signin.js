@@ -14,8 +14,8 @@ const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%&]).{8,24}$/;
 const MAIL_REGEX = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,})$/;
 const TEL_REGEX = /^((?=.{8,}$)[2-3-6]{1}((\s)|(-)?){0,1}([0-9]{2})((\s)|(-)?){0,1}([0-9]{2})((\s)|(-)?){0,1}([0-9]{2})((\s)|(-)?){0,1}([0-9]{2}))$/
 
-const REGISTER_URL = 'http://192.168.2.132:5000/api/user/register';
-const DELAY_SIGNTOLOG = 3500;
+const REGISTER_URL = 'http://192.168.10.5:5000/api/user/register';
+const DELAY_SIGNTOLOG = 500;
 
 const Signin = () => {
     //Toutes mes useState +useEffect debut
@@ -205,7 +205,7 @@ const Signin = () => {
                     setMobile('');
 
                     setTimeout(() => {
-                        navigate('/login');
+                        navigate('/auth/login');
                     }, DELAY_SIGNTOLOG);
 
                 }

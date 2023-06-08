@@ -1,12 +1,15 @@
 import React from 'react'
-import { NavLink,Link } from "react-router-dom";
+import { useNavigate,NavLink,Link } from "react-router-dom";
 import Marquee from 'react-fast-marquee';
-import ProductCard from '../components/ProductCard';
+// import ProductCard from '../components/ProductCard';
 import TopProject from '../components/TopProject';
+// import useLogout from '../hooks/useLogout'
 
-import { animate, motion } from "framer-motion"
+import { animate, motion } from "framer-motion";
+
 
 const Home = () => {
+
   // Element(s)
   //const box = document.getElementById("box");
 
@@ -355,48 +358,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Resume 3 columns svg //Archivee mtn
-      <section class="setup">
-        <div class="items text-center">
-          <div class="row">
-            <div class="col-md-4">
-              <div class="icons">
-                <Link to='/'>
-                  <img src="images/icons-1.svg" alt="icons" />
-                </Link>
-              </div>
-              <div class="desc">
-                <h5>Create accounts</h5>
-                <p>Lorem ipsum dolor sit amet.Lorem ipsum dolor sit amet.</p>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="icons">
-                <Link to='/'>
-                  <img src="images/icons-2.svg" alt="icons" />
-                </Link>
-              </div>
-              <div class="desc">
-                <h5>Faites des profits patriotiques </h5>
-                <p>Lorem ipsum dolor sit amet.Lorem ipsum dolor sit amet.</p>
-              </div>
 
-            </div>
-            <div class="col-md-4">
-              <div class="icons">
-                <Link to='/'>
-                  <img src="images/icons-3.svg" alt="icons" />
-                </Link>
-              </div>
-              <div class="desc">
-                <h5>Faites connaitre votre startup de tous</h5>
-                <p>Lorem ipsum dolor sit amet.Lorem ipsum dolor sit amet.</p>
-              </div>
-
-            </div>
-          </div>
-        </div>
-      </section> */}
 
 
       {/* Warning Section */}

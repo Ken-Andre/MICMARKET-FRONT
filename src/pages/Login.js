@@ -1,91 +1,134 @@
-import { useRef, useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useRef, useState, useEffect } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 import BreadCrumb from "../components/BreadCrumb";
-import { useDispatch } from 'react-redux'
-import { setCredentials } from '../features/auth/authSlice'
-import { useLoginMutation } from '../features/auth/authApiSlice'
+import { useDispatch } from "react-redux";
+import { setCredentials } from "../features/auth/authSlice";
+import { useLoginMutation } from "../features/auth/authApiSlice";
 
-const Login = () => {
-    const userRef = useRef()
-    const errRef = useRef()
-    const [user, setUser] = useState('')
-    const [pwd, setPwd] = useState('')
-    const [errMsg, setErrMsg] = useState('')
-    const navigate = useNavigate()
+const LoginR = () => {
+  const userRef = useRef();
+  const errRef = useRef();
+  const [mailUser, setMailUser] = useState("");
+  const [pwd, setPwd] = useState("");
+  const [errMsg, setErrMsg] = useState("");
+  const navigate = useNavigate();
 
-    const [login, { isLoading }] = useLoginMutation()
-    const dispatch = useDispatch()
+  const [login, { isLoading }] = useLoginMutation();
+  const dispatch = useDispatch();
 
-    useEffect(() => {
-        userRef.current.focus()
-    }, [])
+  useEffect(() => {
+    userRef.current.focus();
+  }, []);
 
-    useEffect(() => {
-        setErrMsg('')
-    }, [user, pwd])
+  useEffect(() => {
+    setErrMsg("");
+  }, [mailUser, pwd]);
 
-    const handleSubmit = async (e) => {
-        e.preventDefault()
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-        try {
-            const userData = await login({ user, pwd }).unwrap()
-            dispatch(setCredentials({ ...userData, user }))
-            setUser('')
-            setPwd('')
-            navigate('/welcome')
-        } catch (err) {
-            if (!err?.originalStatus) {
-                // isLoading: true until timeout occurs
-                setErrMsg('No Server Response');
-            } else if (err.originalStatus === 400) {
-                setErrMsg('Missing Username or Password');
-            } else if (err.originalStatus === 401) {
-                setErrMsg('Unauthorized');
-            } else {
-                setErrMsg('Login Failed');
-            }
-            errRef.current.focus();
-        }
+    try {
+      const userData = await login({ email: mailUser, password: pwd }).unwrap();
+      dispatch(setCredentials({ ...userData, email: mailUser }));
+      setMailUser("");
+      setPwd("");
+      navigate("/");
+    } catch (err) {
+      if (!err?.response) {
+        dispatch(setCredentials(null));
+        setErrMsg("No Server Response");
+      } else if (err.response.status === 400) {
+        dispatch(setCredentials(null));
+        setErrMsg("Missing Username or Password");
+      } else if (err.response.status === 401) {
+        dispatch(setCredentials(null));
+        setErrMsg("You're not recognized");
+      } else {
+        dispatch(setCredentials(null));
+        setErrMsg("Login Failed");
+      }
+      errRef.current && errRef.current.focus();
     }
+  };
 
-    const handleUserInput = (e) => setUser(e.target.value)
+  const handleUserInput = (e) => setMailUser(e.target.value);
 
-    const handlePwdInput = (e) => setPwd(e.target.value)
+  const handlePwdInput = (e) => setPwd(e.target.value);
 
-    const content = isLoading ? <h1>Loading...</h1> : (
-       <>
-       <BreadCrumb />
-        <section className="login container">
-            <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
+  const content = isLoading ? (
+    <h1>Loading...</h1>
+  ) : (
+    <>
+      <BreadCrumb title="login" />
+      <section className="login container-md">
+        <p
+          ref={errRef}
+          className={errMsg ? "errmsg" : "offscreen"}
+          aria-live="assertive"
+        >
+          {errMsg}
+        </p>
 
-            <h1>Employee Login</h1>
+        <h2 className="h4 mb-3 fw-normal ">Veillez vous connectez.</h2>
 
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="username">Username:</label>
-                <input
-                    type="text"
-                    id="username"
-                    ref={userRef}
-                    value={user}
-                    onChange={handleUserInput}
-                    autoComplete="off"
-                    required
-                />
+        <form className="m-auto py-3" onSubmit={handleSubmit}>
+          <div className="form-floating mb-2">
+            {/* <label htmlFor="username">Username:</label> */}
+            <input
+              type="email"
+              name="mail"
+              className="form-control"
+              id="floatingInput"
+              placeholder="name@example.com"
+              ref={userRef}
+              value={mailUser}
+              onChange={handleUserInput}
+              autoComplete="off"
+              required
+            />
+            <label for="floatingInput" htmlFor="email">
+              Email address
+            </label>
+          </div>
+          <div className="form-floating mb-2">
+            <input
+              type="password"
+              className="form-control"
+              id="floatingPassword"
+              placeholder="Password"
+              onChange={handlePwdInput}
+              value={pwd}
+              required
+            />
+            <label for="floatingPassword" htmlFor="password">
+              Password
+            </label>
+          </div>
+          <button
+            type="submit"
+            // disabled={emptyMail || emptyPwd ? true : false}
+            className="btn btn-lg btn-primary form-control border-0 mb-2"
+          >
+            Sign In
+          </button>
+          {/* Fin Submit Form Button */}
+          <p>
+            Not Registered?
+            <span className="line">
+              {/*put router link here*/}
+              <NavLink
+                to="/auth/signup"
+                className="fw-medium text-primary text-opacity-75 left-gap"
+              >
+                Signin
+              </NavLink>
+            </span>
+          </p>
+        </form>
+      </section>
+    </>
+  );
 
-                <label htmlFor="password">Password:</label>
-                <input
-                    type="password"
-                    id="password"
-                    onChange={handlePwdInput}
-                    value={pwd}
-                    required
-                />
-                <button>Sign In</button>
-            </form>
-        </section>
-        </>
-    )
-
-    return content
-}
-export default Login
+  return content;
+};
+export default LoginR;
