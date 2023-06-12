@@ -1,16 +1,15 @@
 import { createContext, useState } from "react";
+import axios from "axios";
 
-const AuthContext = createContext({});
+export const AuthContext = createContext();
 
-export const AuthProvider = ({ children }) => {
+export function AuthProvider({children}) {
     const [auth, setAuth] = useState({});
-    const [persist, setPersist] = useState(JSON.parse(localStorage.getItem("persist")) || false);
-
     return (
-        <AuthContext.Provider value={{ auth, setAuth, persist, setPersist }}>
+        <AuthContext.Provider value = {{auth, setAuth}}>
             {children}
         </AuthContext.Provider>
     )
 }
 
-export default AuthContext;
+// export default AuthProvider;

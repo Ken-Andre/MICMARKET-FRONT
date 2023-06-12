@@ -3,12 +3,14 @@ import Meta from "../components/Meta";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import { useRef, useState, useEffect } from 'react';
 import useAuth from '../hooks/useAuth';
-import axios from 'axios';
+import axios from '../api/axios';
 
 const LOGIN_URL = "http://192.168.2.132:5000/api/user/login";
 const DELAY_BEF_MOVE = 1500;
 const Login = () => {
-  const { setAuth } = useAuth();
+
+  // const [auth, setAuth] = useState({ mailUser: "", pwdUser: "", token: "", role: "" });
+    const { setAuth } = useAuth();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -118,15 +120,17 @@ const Login = () => {
     //     errRef.current && errRef.current.focus();
     //   });
     try {
-      const response = await axios.post(LOGIN_URL, JSON.stringify(payload), {
+      const response = await axios.post(LOGIN_URL, JSON.stringify(
+        {email: mailUser,
+        password: pwdUser,}
+      ), {
         headers: { "Content-Type": "application/json" },
         withCredentials: true,
-      });
+      });kekjnk
       console.log(JSON.stringify(response?.data));
       const token = response.data?.token;
       const role = response.data?.role;
-      setAuth({ mailUser, pwdUser, role, token });
-      console.log("Un user:",mailUser,"pass:",pwdUser,"role:",role,"token:",token);
+      setAuth({ email, password, role, token });
       setMailUser("");
       setPwdUser("");
       navigate(from, { replace: true });
