@@ -1,5 +1,6 @@
 import React from "react";
 import "./App.css";
+import "./main.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./components/MLayout";
 import MLayout from "./components/MLayout";
@@ -9,6 +10,7 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import OurStore from "./pages/OurStore";
 import SingleProduct from "./pages/SingleProduct";
+import SingleProd from "./pages/SingleProd";
 // import LoginR from "./pages/Login";
 import Login from "./pages/Log";
 
@@ -34,7 +36,7 @@ function App() {
             <Route path="about" element={<About />} />
             <Route path="contact" element={<Contact />} />
             <Route path="categories" element={<OurStore />} />
-            <Route path="startup/:id" element={<SingleProduct />} />
+            <Route path="startup/:id" element={<SingleProd />} />
             <Route path="terms" element={<TermsAndConditions />} />
 
             {/* <Route path="forgot" element={<Forgot />} /> */}

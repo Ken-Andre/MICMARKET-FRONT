@@ -5,7 +5,7 @@ import { useRef, useState, useEffect } from 'react';
 import useAuth from '../hooks/useAuth';
 import axios from 'axios';
 
-const LOGIN_URL = "http://192.168.2.132:5000/api/user/login";
+const LOGIN_URL = "http://192.168.2.5:5000/api/user/login";
 const DELAY_BEF_MOVE = 1500;
 const Login = () => {
   const { setAuth } = useAuth();
