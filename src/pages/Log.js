@@ -1,11 +1,11 @@
 import BreadCrumb from "../components/BreadCrumb";
 import Meta from "../components/Meta";
-import { NavLink, useNavigate, useLocation } from "react-router-dom";
-import { useRef, useState, useEffect } from 'react';
-import useAuth from '../hooks/useAuth';
-import axios from 'axios';
+import { NavLink, useNavigate, useLocation, Link } from "react-router-dom";
+import { useRef, useState, useEffect } from "react";
+import useAuth from "../hooks/useAuth";
+import axios from "axios";
 
-const LOGIN_URL = "http://192.168.2.5:5000/api/user/login";
+const LOGIN_URL = "http://127.0.0.1:5000/api/user/login";
 const DELAY_BEF_MOVE = 1500;
 const Login = () => {
   const { setAuth } = useAuth();
@@ -126,7 +126,16 @@ const Login = () => {
       const token = response.data?.token;
       const role = response.data?.role;
       setAuth({ mailUser, pwdUser, role, token });
-      console.log("Un user:",mailUser,"pass:",pwdUser,"role:",role,"token:",token);
+      console.log(
+        "Un user:",
+        mailUser,
+        "pass:",
+        pwdUser,
+        "role:",
+        role,
+        "token:",
+        token
+      );
       setMailUser("");
       setPwdUser("");
       navigate(from, { replace: true });
@@ -217,7 +226,11 @@ const Login = () => {
                     />
                     Remember me
                   </label>
+                  <div className="text-end fw-medium text-primary">
+                    <NavLink to="auth/forgot-password">Forgot Password?</NavLink>
+                  </div>
                 </div>
+
                 {/* Fin Remember Zone */}
                 {/* Debut Submit Form Button */}
                 <div className="d-flex justify-content-center">

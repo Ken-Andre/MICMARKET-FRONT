@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import ReactStars from "react-rating-stars-component";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 
-const ProductCard = ({ priceRange = [], className = "", grid = 1 }) => {
-  const [games, setGames] = useState([]);
+const ProductCard = ({ priceRange = [], className = "", grid = 1, post }) => {
+  //const [startups, setStartups] = useState([]);
   const [tooltipText, setTooltipText] = useState("");
 
   const navigate = useNavigate();
@@ -16,8 +16,8 @@ const ProductCard = ({ priceRange = [], className = "", grid = 1 }) => {
     setTooltipText("");
   };
 
-  useEffect(() => {
-    const getGames = async () => {
+ {/* useEffect(() => {
+  const getGames = async () => {
       try {
         const res = await fetch(
           `https://rawg.io/api/games?key=${process.env.REACT_APP_RAWG}`
@@ -27,59 +27,63 @@ const ProductCard = ({ priceRange = [], className = "", grid = 1 }) => {
         }
         const data = await res.json();
         console.log(data);
-        setGames(data.results);
+        setStartups(data.results);
       } catch (error) {
         console.error(error);
       }
     };
     getGames();
-  }, []);
+    //setStartups(post);
+  }, []);*/}
 
-  // Filter games based on price range
-  const filteredGames = games.filter((game) => {
-    const price = game.price || 0;
+  // Filter startups based on price range
+  {/*const filteredGames = post.filter((post) => {
+    const price = post.price || 0;
     if (priceRange.length === 0) {
-      return true; // Include all games if priceRange is empty
+      return true; // Include all startups if priceRange is empty
     }
     return price >= priceRange[0] && price <= priceRange[1];
-  });
+  });*/}
 
-  const handleKnowMoreClick = (game) => {
-    console.log(`Know more on ${game.name}`);
-    navigate(`/startup/${game.id}`);
+  const handleKnowMoreClick = (post) => {
+    console.log(`Know more on ${post.name}`);
+    navigate(`/startup/${post.id}`);
   };
 
   return (
     <div className={className}>
-      {filteredGames.map((game) => (
-        <div className="card product-card" key={game.id}>
+      {/*{filteredGames.map((game) => (*/}
+        <div className="card product-card" key={post.id}>
           <a href="/startup/ant-editions " className="card-link">
             <div>
               <img
-                src={game.background_image}
+                src={post.background_image}
                 className="img-fluid  mr-2"
-                alt={game.name}
+                alt={post.name}
               />
             </div>
           </a>
-          <a href={`startup/${game.id}`}>
+          <a href={`startup/${post.id}`}>
             <div className="card-body">
               <div className="d-flex align-items-center">
-                <h4 className="card-text font-weight-bold">{game.name}</h4>
+                <h4 className="card-text font-weight-bold">{post.name}</h4>
               </div>
               <div className="d-flex align-items-center">
                 <div className="star-rating mr-1">
                   <ReactStars
                     count={5}
                     size={24}
-                    value={game.rating}
+                    value={post.rating}
                     edit={false}
                     color1={"#999999"}
                     color2={"#ffd700"}
                     half={true}
                   />
                 </div>
-                <p className="card-text small text-muted">{game.rating}</p>
+                <p className="card-text small text-muted">{post.rating}</p>
+                <h5>{post.title}</h5>
+            <p>{post.body}</p>
+            <p>Post ID: {post.id}</p>
               </div>
             </div>
           </a>
@@ -88,7 +92,7 @@ const ProductCard = ({ priceRange = [], className = "", grid = 1 }) => {
             <div className="d-flex align-items-center">
               <div className="position-relative">
                 <a
-                  href={game.website ? `${game.website}` : "#"}
+                  href={post.website ? `${post.website}` : "#"}
                   className="btn btn-link "
                   onMouseOver={handleMouseOver}
                   onMouseLeave={handleMouseLeave}
@@ -111,37 +115,37 @@ const ProductCard = ({ priceRange = [], className = "", grid = 1 }) => {
                   </svg>
                 </a>
                 <span className="small text-muted mr-2 ">
-                  {game.price ? `${game.price}$` : "Free"}{" "}
+                  {post.price ? `${post.price}$` : "Free"}{" "}
                 </span>
               </div>
             </div>
             <div className="d-flex align-items-center">
               <span className="small text-muted mr-2 ">
-                {game.category ? `${game.category}` : "Services Technologiques"}
+                {post.category ? `${post.category}` : "Services Technologiques"}
               </span>
               <span className="small text-muted mr-2">·</span>
               <span className="small text-muted">
-                {game.subcategory
-                  ? `${game.subcategory}`
+                {post.subcategory
+                  ? `${post.subcategory}`
                   : "Moteur de recherche"}
               </span>
             </div>
 
             {/* <div className="text-muted small ml-2">
-                {game.price ? `$${game.price}` : 'Free'}
+                {post.price ? `$${post.price}` : 'Free'}
               </div> */}
             {/* </div> */}
             <div>
               <button
                 className="btn  btn-primary btn-sm"
-                onClick={() => handleKnowMoreClick(game)}
+                onClick={() => handleKnowMoreClick(post)}
               >
                 En Savoir Plus
               </button>
             </div>
           </div>
         </div>
-      ))}
+      {/*))}*/}
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { BsLinkedin, BsTiktok, BsYoutube, BsInstagram } from "react-icons/bs";
+
 const Footer = () => {
   return (
     <>
@@ -47,16 +48,20 @@ const Footer = () => {
                   jabaspace@gmail.com
                 </a>
                 <div className=' d-flex align-items-center gap-30 mt-4'>
-                  <a href='#' className="mt-2 d-block mb-0 text-white">
+                  <a href='https://www.instagram.com/jabaspace/?hl=fr' 
+                  className="mt-2 d-block mb-0 text-white">
                     <BsInstagram className='fs-4' />
                   </a>
-                  <a href='#' className="mt-2 d-block mb-0 text-white">
+                  <a href='https://www.youtube.com/@JabaSpace'
+                   className="mt-2 d-block mb-0 text-white">
                     <BsYoutube className='fs-4' />
                   </a>
-                  <a href='#' className="mt-2 d-block mb-0 text-white">
+                  <a href='https://www.tiktok.com/@jabaspace' 
+                  className="mt-2 d-block mb-0 text-white">
                     <BsTiktok className='fs-4' />
                   </a>
-                  <a href='#' className="mt-2 d-block mb-0 text-white">
+                  <a href='https://linkedin.com/company/jabaspace'
+                   className="mt-2 d-block mb-0 text-white">
                     <BsLinkedin className='fs-4' />
                   </a>
                 </div>
@@ -66,20 +71,20 @@ const Footer = () => {
               <h4 className='text-white mb-4'>Policies</h4>
               <div className="footer-link d-flex flex-column">
                 <Link className='text-white py-2 mb-1'>Privacy </Link>
-                <Link className='text-white py-2 mb-1'>Refund Policy</Link>
-                <Link className='text-white py-2 mb-1'>Use Policy</Link>
-                <Link className='text-white py-2 mb-1'>Terms</Link>
-                <Link className='text-white py-2 mb-1'>Aknowledgments</Link>
+                {/*<Link className='text-white py-2 mb-1'>Refund Policy</Link>
+                <Link className='text-white py-2 mb-1'>Use Policy</Link>*/}
+                <Link to="terms"className='text-white py-2 mb-1'>Terms</Link>
+                {/*<Link className='text-white py-2 mb-1'>Aknowledgments</Link>*/}
               </div>
             </div>
             <div className='col-3'>
               <h4 className='text-white mb-4'>Company</h4>
               <div className="footer-link d-flex flex-column">
-                <Link className='text-white py-2 mb-1'>Search</Link>
+                {/*<Link className='text-white py-2 mb-1'>Search</Link>*/}
                 <Link className='text-white py-2 mb-1'>About Us</Link>
-                <Link className='text-white py-2 mb-1'>Faq</Link>
-                <Link className='text-white py-2 mb-1'>Contact</Link>
-                <Link className='text-white py-2 mb-1'>Site Chart</Link>
+                <Link to="/faq"className='text-white py-2 mb-1'>Faq</Link>
+                {/*<Link className='text-white py-2 mb-1'>Contact</Link>
+                <Link className='text-white py-2 mb-1'>Site Chart</Link>*/}
               </div>
             </div>
             <div className='col-2'>

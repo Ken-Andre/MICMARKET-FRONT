@@ -91,9 +91,12 @@ const MHeader = () => {
             {/* <li className="nav-items"><a className="dropdown-item" href="#">New Startup...</a></li>
                         <li className="nav-items"><a className="dropdown-item" href="#">Admin</a></li> */}
             <li className="nav-items">
-              <a className="dropdown-item" href="#">
-                Account
-              </a>
+              <Link className="dropdown-item " to="user">
+                Account Profile
+              </Link>
+              <Link className="dropdown-item" to="funding">
+                Startup Profile
+              </Link>
             </li>
             <li className="nav-items">
               <hr className="dropdown-divider" />

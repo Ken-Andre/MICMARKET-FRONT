@@ -70,7 +70,10 @@ const FilterProduct = (props) => {
   }
 
   const handlePriceRangeChange = (event, newValue) => {
-    setPriceRange(newValue);
+  setPriceRange(newValue);
+  setMinPrice(newValue[0]);
+  setMaxPrice(newValue[1]);
+  console.log("Slide changed: ",minPrice,maxPrice)
   };
 
   return (

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import BreadCrumb from "../components/BreadCrumb";
 import Meta from "../components/Meta";
 import { AiOutlineHome, AiOutlineMail } from "react-icons/ai";
@@ -6,6 +6,33 @@ import { BiPhoneCall, BiInfoCircle } from "react-icons/bi";
 // import Container from "../components/Container";
 
 const Contact = () => {
+  const [cName, setCName]= useState([""]);
+  const [cMail, setCMail]= useState([""]);
+  const [cTel, setCTel]= useState([""]);
+  const [cMessage, setMessage]= useState([""]);
+
+  const handleOnChngName = (e) =>{
+    setCName(e.target.value);
+  }
+  const handleOnChngMail = (e) =>{
+    setCMail(e.target.value);
+  }
+  const handleOnChngTel = (e) =>{
+    setCTel(e.target.value);
+  }
+  const handleOnChngMsg = (e) =>{
+    setMessage(e.target.value);
+  }
+
+  const handleCContact = (e) => {
+    e.preventDefault();
+    const payload = {
+      "Name": cName,
+      "Email": cMail,
+      "Message": cMessage,
+      "Mobile": cTel,
+    }
+  }
   return (
     <>
       <Meta title={"Contact Us"} />
@@ -42,19 +69,20 @@ const Contact = () => {
                             <form>
                               <div class="mb-3">
                                 <label for="name" class="form-label">Nom</label>
-                                <input type="text" class="form-control "  id="name" placeholder="Your Name Here ..." required />
+                                <input type="text" class="form-control " value={cName} onChange={handleOnChngName}  id="name" placeholder="Your Name Here ..." required />
                               </div>
                               <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="email" placeholder="name@email.domain" required />
+                                <input type="email" class="form-control" value={cMail} onChange={setCMail}
+                                  id="email" placeholder="name@email.domain" required />
                               </div>
                               <div class="mb-3">
                                 <label for="phone" class="form-label">Téléphone</label>
-                                <input type="tel" class="form-control" id="phone" placeholder="+(--) 678495663" required />
+                                <input type="tel" class="form-control" value={cTel} onChange={setCTel} id="phone" placeholder="+(--) 678495663" required />
                               </div>
                               <div class="mb-3">
                                 <label for="message" class="form-label">Message</label>
-                                <textarea class="form-control" id="message" placeholder="Votre message ici ..." rows="4" required></textarea>
+                                <textarea class="form-control" value={cMessage} onChange={handleOnChngMsg} id="message" placeholder="Votre message ici ..." rows="4" required></textarea>
                               </div>
                               <div class="d-grid gap-2">
                                 <button type="submit" class="btn btn-primary ">Envoyer</button>

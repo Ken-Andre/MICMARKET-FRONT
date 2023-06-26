@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { getPosts } from "../utils/axios";
 import axios from "axios";
 import Meta from "../components/Meta";
 import ProductCard from "../components/ProductCard";
 import Slider from "@mui/material/Slider";
 import FilterProduct from "../components/FilterProduct";
+import ListStartup from "../components/ListStartup";
+import SearchBar from "../components/SearchBar";
 
 const OurStore = () => {
   const [grid, setGrid] = useState(2);
@@ -11,6 +14,8 @@ const OurStore = () => {
   //   const [maxPrice, setMaxPrice] = useState(1000000);
 
   const [games, setGames] = useState([]);
+    const [posts, setPosts] = useState([])
+    const [searchResults, setSearchResults] = useState([])
   const [filteredGames, setFilteredGames] = useState([]);
   const [query, setQuery] = useState("");
 
@@ -21,11 +26,20 @@ const OurStore = () => {
       )
       .then((response) => {
         setGames(response.data.results);
+        setPosts(response.data.results);
       })
       .catch((error) => {
         console.error(error);
       });
   }, [query]);
+    
+
+  useEffect(() => {
+    getPosts().then(json => {
+      setPosts(json)
+      setSearchResults(json)
+    })
+  }, [])
   //   const [priceRange, setPriceRange] = useState([]);
   //   const [selectedCategories, setSelectedCategories] = useState([]);
 
@@ -108,6 +122,9 @@ const OurStore = () => {
                       <option name="created-descending">Oldest</option>
                     </select>
                   </div>
+                   <div className="d-flex align-items-center gap-10">
+                   	<SearchBar posts={posts} setSearchResults={setSearchResults} />
+                   </div>
                   <div className="d-flex align-items-center gap-10">
                     {games && Array.isArray(games) && (
                       <p className="totalproducts mb-0">
@@ -135,12 +152,8 @@ const OurStore = () => {
                   </div>
                 </div>
               </div>
-              <div className="product-list pb-5">
-                {/* LISTE PRODUITS DIV */}
-                {/* {filteredProducts.map((product) => ( */}
-                <ProductCard games={filteredGames} />
-                {/* ))} */}
-              </div>
+              {/*Ici liste all products */}
+              <ListStartup searchResults={searchResults} />
             </div>
           </div>
         </div>
