@@ -3,7 +3,10 @@ import Meta from "../components/Meta";
 import { NavLink, useNavigate, useLocation, Link } from "react-router-dom";
 import { useRef, useState, useEffect } from "react";
 import useAuth from "../hooks/useAuth";
-import axios from "axios";
+// import axios from "axios";
+import { axiosPrivate } from "../api/axios";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const LOGIN_URL = "http://127.0.0.1:5000/api/user/login";
 const DELAY_BEF_MOVE = 1500;
@@ -56,8 +59,6 @@ const Login = () => {
   //Function for Post Submit form
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // if button enabled with JS hack
-    //const v1 = USER_REGEX.test(user);
     const v1 = mailUser.trim() === "";
     const v2 = pwdUser.trim() === "";
     console.log("button:", v1, v2);
@@ -69,57 +70,11 @@ const Login = () => {
       email: mailUser,
       password: pwdUser,
     };
-    // fetch(LOGIN_URL, {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-type": "application/json",
-    //   },
-    //   body: JSON.stringify(payload)
-    // })
-    //   .then(response => {
-    //     if (!response.ok) {
-    //       if (response.status === 500) {
-    //         console.log(response, "& ", response.status);
-
-    //         setErrMsg('Incorrect Password or Username');
-
-    //       }
-    //       else {
-    //         setErrMsg('Invalid Credentials');
-    //       }
-    //       // throw new Error("Failed to send! \n Verify Your Network Connection !");
-    //     }
-    //     else {
-    //       setErrMsg('');
-    //       setSuccess(true);
-    //       setMailUser('');
-    //       setPwdUser('');
-    //       setTimeout(() => {
-    //         navigate('/signin');
-    //       }, DELAY_BEF_MOVE);
-
-    //     }
-    //     return response.json(); // extract JSON response from response object
-    //   })
-    //   .then(data => {
-    //     console.log('Server Response:', data);
-    //     if (data.message === 'Invalid Credentials !') {
-    //       setErrMsg('Invalid Email or pwd');
-    //     }
-    //     errRef.current && errRef.current.focus();
-    //   })
-    //   .catch(err => {
-    //     console.log('Error:', err);
-    //     if (!err === "") {
-    //       setErrMsg('No Server Response');
-    //     } else {
-    //       setErrMsg( 'Invalid Email or password');
-    //     }
-    //     errRef.current && errRef.current.focus();
-    //   });
     try {
-      const response = await axios.post(LOGIN_URL, JSON.stringify(payload), {
-        headers: { "Content-Type": "application/json" },
+      const response = await axiosPrivate.post("user/login", payload, {
+        headers: {
+          "Content-Type": "application/json",
+        },
         withCredentials: true,
       });
       console.log(JSON.stringify(response?.data));
@@ -139,17 +94,23 @@ const Login = () => {
       setMailUser("");
       setPwdUser("");
       navigate(from, { replace: true });
+      toast.success("Login Successful");
     } catch (err) {
       if (!err?.response) {
-        setErrMsg("No Server Response");
+        toast.error("No Server Response");
+          // setErrMsg("No Server Response");
+      } else if (err.response?.status === 401) { //Bad Status Code
+        toast.error("Missing  Username or Password");
+          // setErrMsg("Missing Username or Password");
       } else if (err.response?.status === 400) {
-        setErrMsg("Missing Username or Password");
-      } else if (err.response?.status === 401) {
-        setErrMsg("Unauthorized");
+        toast.error("Unauthorized");
+          // setErrMsg("Unauthorized");
       } else {
-        setErrMsg("Login Failed");
+        toast.error("Login");
+          // setErrMsg("Login Failed");
       }
       errRef.current.focus();
+      //toast.error("Login Failed");
     }
   };
 
@@ -165,6 +126,7 @@ const Login = () => {
     <>
       <Meta title={"Login"} />
       <BreadCrumb title={"Login"} />
+      <ToastContainer />
       <div className="login-wrapper py-4 container-md rounded-box-white">
         <div className="row">
           <div className="col-12">
@@ -227,7 +189,9 @@ const Login = () => {
                     Remember me
                   </label>
                   <div className="text-end fw-medium text-primary">
-                    <NavLink to="auth/forgot-password">Forgot Password?</NavLink>
+                    <NavLink to="auth/forgot-password">
+                      Forgot Password?
+                    </NavLink>
                   </div>
                 </div>
 
