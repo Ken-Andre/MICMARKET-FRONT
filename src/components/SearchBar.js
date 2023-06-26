@@ -9,6 +9,7 @@ const SearchBar = ({ posts, setSearchResults }) => {
     console.log(e.target.value, "before research found");
     const resultsArray = posts.filter(
       (post) =>
+        post?.name?.includes(e.target.value) ||
         post?.title?.includes(e.target.value) ||
         post?.body?.includes(e.target.value) ||
         posts?.website?.includes(e.target.value) ||

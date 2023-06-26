@@ -27,12 +27,13 @@ const OurStore = () => {
       .then((response) => {
         setGames(response.data.results);
         setPosts(response.data.results);
+        setSearchResults(response.data.results);
       })
       .catch((error) => {
         console.error(error);
       });
   }, [query]);
-    
+
 
   useEffect(() => {
     getPosts().then(json => {
@@ -126,9 +127,9 @@ const OurStore = () => {
                    	<SearchBar posts={posts} setSearchResults={setSearchResults} />
                    </div>
                   <div className="d-flex align-items-center gap-10">
-                    {games && Array.isArray(games) && (
+                    {searchResults && Array.isArray(searchResults) && (
                       <p className="totalproducts mb-0">
-                        {games.length} Startups
+                        {searchResults.length} Startups
                       </p>
                     )}
                     {!games && "Loading..."}
