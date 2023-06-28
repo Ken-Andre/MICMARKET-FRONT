@@ -34,8 +34,9 @@ const SearchBar = ({ posts, setSearchResults }) => {
             {/* <!--end of col--> */}
             <div class="col">
               <input
-                className="search_input form-control"
+                className="search_input form-control col-form-label-sm"
                 type="text"
+                placeholder="Search a specific Startup ..."
                 id="search"
                 onChange={handleSearchChange}
               />

@@ -13,6 +13,9 @@ const FilterProduct = (props) => {
     // setMaxPrice,
     // setPriceRange,
     setQuery,
+    zind,
+    className,
+    style,
   } = props;
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [minPrice, setMinPrice] = useState(10);
@@ -70,15 +73,16 @@ const FilterProduct = (props) => {
   }
 
   const handlePriceRangeChange = (event, newValue) => {
-  setPriceRange(newValue);
-  setMinPrice(newValue[0]);
-  setMaxPrice(newValue[1]);
-  console.log("Slide changed: ",minPrice,maxPrice)
+    setPriceRange(newValue);
+    setMinPrice(newValue[0]);
+    setMaxPrice(newValue[1]);
+    console.log("Slide changed: ", minPrice, maxPrice);
   };
 
   return (
     <>
-      <div className="col-3">
+      {/* col-3  */}
+      <div className={className} style={style}>
         {/* Filter by */}
         <div className="filter-card mb-3">
           <h3 className="filter-title">Filter By</h3>

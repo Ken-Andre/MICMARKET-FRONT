@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate, Link } from "react-router-dom";
 import useLogout from "../hooks/useLogout";
 import useAuth from "../hooks/useAuth";
@@ -27,7 +27,7 @@ const MHeader = () => {
 
   return (
     <>
-      <header className="navbar navbar-expand-lg d-flex justify-content-center text-bg-dark flex-wrap align-items-center justify-content-md-between py-2  ">
+      <header className="navbar navbar-expand-lg d-flex justify-content-center text-bg-dark flex-wrap align-items-center justify-content-md-between py-2 w-100">
         <div className="navbar-brand col-lg-auto  ">
           <NavLink
             to="/"
@@ -38,7 +38,7 @@ const MHeader = () => {
           </NavLink>
         </div>
 
-        <ul className="nav nav-masthead justify-content-center mx-auto">
+        <ul className="nav nav-masthead justify-content-center mx-auto d-flex align-items-center">
           <li className="nav-items">
             <NavLink
               to="/"
@@ -59,55 +59,60 @@ const MHeader = () => {
           </li>
         </ul>
         {showLoginGroup ? (
-        <div className="col-md-3 text-end ">
-          <NavLink
-            to="/auth/login"
-            type="button"
-            className="btn btn-outline-primary me-2"
-          >
-            Login
-          </NavLink>
-          <NavLink to="/auth/signup" type="button" className="btn btn-primary">
-            Sign-In
-          </NavLink>
-        </div>):(
-
-        <div className="col-md-3 dropdown text-end">
-          <a
-            href="#"
-            className="d-block link-dark btn dropdown-toggle "
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            <img
-              src="images/user.svg"
-              alt="user"
-              className="rounded-circle"
-              width="32"
-              height="32"
-            />
-          </a>
-          <ul className="dropdown-menu dropdown-menu-end " style={{}}>
-            {/* <li className="nav-items"><a className="dropdown-item" href="#">New Startup...</a></li>
+          <div className="text-end ">
+            <NavLink
+              to="/auth/login"
+              type="button"
+              className="btn btn-outline-primary me-2"
+            >
+              Login
+            </NavLink>
+            <NavLink
+              to="/auth/signup"
+              type="button"
+              className="btn btn-primary"
+            >
+              Sign-In
+            </NavLink>
+          </div>
+        ) : (
+          <div className="col-md-3 dropdown text-end">
+            <a
+              href="#"
+              className="d-block link-dark btn dropdown-toggle "
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <img
+                src="images/user.svg"
+                alt="user"
+                className="rounded-circle"
+                width="32"
+                height="32"
+              />
+            </a>
+            <ul className="dropdown-menu dropdown-menu-end " style={{}}>
+              {/* <li className="nav-items"><a className="dropdown-item" href="#">New Startup...</a></li>
                         <li className="nav-items"><a className="dropdown-item" href="#">Admin</a></li> */}
-            <li className="nav-items">
-              <Link className="dropdown-item " to="user">
-                Account Profile
-              </Link>
-              <Link className="dropdown-item" to="funding">
-                Startup Profile
-              </Link>
-            </li>
-            <li className="nav-items">
-              <hr className="dropdown-divider" />
-            </li>
-            <li className="nav-items">
-              <a className="dropdown-item" href="#" onClick={signOut}>
-                Sign out
-              </a>
-            </li>
-          </ul>
-        </div>)}
+              <li className="nav-items">
+                <Link className="dropdown-item " to="user">
+                  Account Profile
+                </Link>
+                <Link className="dropdown-item" to="funding">
+                  Startup Profile
+                </Link>
+              </li>
+              <li className="nav-items">
+                <hr className="dropdown-divider" />
+              </li>
+              <li className="nav-items">
+                <a className="dropdown-item" href="#" onClick={signOut}>
+                  Sign out
+                </a>
+              </li>
+            </ul>
+          </div>
+        )}
       </header>
     </>
   );

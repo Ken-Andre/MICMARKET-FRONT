@@ -20,6 +20,7 @@ import AuthLayout from "./pages/Signup";
 import Signin from "./pages/Signin";
 import Startup from "./pages/Startup";
 import FAQ from "./pages/FAQ";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsAndConditions from "./pages/TermsAndConditions";
 import Welcome from "./pages/Welcome.js";
 //import Layout from './components/Layout';
@@ -53,6 +54,7 @@ function App() {
             <Route path="categories" element={<OurStore />} />
             <Route path="startup/:id" element={<SingleProd />} />
             <Route path="faq" element={<FAQ />} />
+            <Route path="privacy" element={<PrivacyPolicy />} />
             <Route path="terms" element={<TermsAndConditions />} />
           </Route>
 

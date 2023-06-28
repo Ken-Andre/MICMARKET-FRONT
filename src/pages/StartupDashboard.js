@@ -19,11 +19,11 @@ export default function StartupDashboard() {
     <Box sx={{ width: '100%', typography: 'body1' }}>
       <TabContext value={value}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <TabList onChange={handleChange} aria-label="lab API tabs example">
+          <TabList onChange={handleChange} aria-label="lab API tabs example" variant="scrollable" scrollButtons="auto">
             <Tab label="Overview" value="overview" />
             <Tab label="Register My Startup" value="add" />
             <Tab label="Startup Status" value="status" />
-            
+
           </TabList>
         </Box>
         <TabPanel value="overview">
@@ -35,7 +35,7 @@ export default function StartupDashboard() {
         <TabPanel value="status">
           <StartupStatus />
         </TabPanel>
-        
+
       </TabContext>
     </Box>
   );

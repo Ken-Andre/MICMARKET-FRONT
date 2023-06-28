@@ -120,6 +120,24 @@ a {
   margin-bottom: 15px;
 }
 
+/*Utils for Z index */
+.zind-0 {
+  position: relative;
+  z-index: 0;
+}
+.zind-1 {
+  position: sticky;
+  z-index: 1;
+}
+.zind-2 {
+  position: sticky;
+  z-index: 2;
+}
+.zind-3 {
+  position: sticky;
+  z-index: 3;
+}
+
 /* Header Part*/
 .header-top-strip {
   border: 1px solid var(--color-3b4149);
@@ -724,8 +742,8 @@ form {
 }
 
 a,
-a:visited {
-  color: #fff;
+a:visited > p{
+  color: var(--neutral-black);
 }
 
 div .subtiles-warning p {

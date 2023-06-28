@@ -18,9 +18,9 @@ export default function ProfileDashboard() {
 
   return (
     <Box sx={{ width: '100%', typography: 'body1' }}>
-      <TabContext value={value}>
+      <TabContext value={value} >
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <TabList onChange={handleChange} aria-label="lab API tabs example">
+          <TabList onChange={handleChange} aria-label="lab API tabs example" variant="scrollable" scrollButtons="auto">
             <Tab label="Overview" value="overview" />
             <Tab label="Change Location" value="change-location" />
             <Tab label="Change Password" value="change-password" />
