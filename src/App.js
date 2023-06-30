@@ -13,7 +13,8 @@ import OurStore from "./pages/OurStore";
 import SingleProduct from "./pages/SingleProduct";
 import SingleProd from "./pages/SingleProd";
 // import LoginR from "./pages/Login";
-import Login from "./pages/Log";
+// import Login from "./pages/Log";
+import Login from "./components/Login";
 import ForgotPassword from "./pages/ForgotPassword";
 
 import AuthLayout from "./pages/Signup";

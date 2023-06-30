@@ -10,14 +10,24 @@ const MHeader = () => {
   const logout = useLogout();
   const { auth } = useAuth();
   const [showLoginGroup, setShowLoginGroup] = useState(true);
+  const [showUserDashLink, setShowUserDashLink] = useState(false);
+  const [showStartupDashLink, setShowStartupDashLink] = useState(false);
 
   useEffect(() => {
     if (auth.token) {
       setShowLoginGroup(false);
+      if (auth.role == "admin") {
+        setShowUserDashLink(true);
+        setShowStartupDashLink(true);
+      } else if (auth.role == "startup") {
+        setShowStartupDashLink(true);
+      } else {
+        setShowUserDashLink(true);
+      }
     } else {
       setShowLoginGroup(true);
     }
-  }, [auth.token]);
+  }, [auth.token,auth.role]);
 
   const signOut = async () => {
     await logout();
@@ -95,12 +105,16 @@ const MHeader = () => {
               {/* <li className="nav-items"><a className="dropdown-item" href="#">New Startup...</a></li>
                         <li className="nav-items"><a className="dropdown-item" href="#">Admin</a></li> */}
               <li className="nav-items">
-                <Link className="dropdown-item " to="user">
-                  Account Profile
-                </Link>
-                <Link className="dropdown-item" to="funding">
-                  Startup Profile
-                </Link>
+                {showUserDashLink && (
+                  <Link className="dropdown-item " to="user">
+                    Account Profile
+                  </Link>
+                )}
+                {showStartupDashLink && (
+                  <Link className="dropdown-item" to="funding">
+                    Startup Profile
+                  </Link>
+                )}
               </li>
               <li className="nav-items">
                 <hr className="dropdown-divider" />

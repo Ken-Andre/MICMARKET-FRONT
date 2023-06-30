@@ -142,7 +142,6 @@ a {
 .header-top-strip {
   border: 1px solid var(--color-3b4149);
   background-color: var(--color-131921);
-
 }
 
 .header-upper {
@@ -174,7 +173,7 @@ a {
 }
 
 .header-bottom .dropdown button ::before {
-  contain: url(../public/images/menu.svg)
+  contain: url(../public/images/menu.svg);
 }
 
 .header-bottom .dropdown button:focus {
@@ -198,7 +197,6 @@ a {
   color: var(--color-febd69) !important;
 }
 
-
 .navbar,
 .navbar-dark {
   position: sticky;
@@ -211,7 +209,6 @@ a {
 .navbar.scrolled {
   background: #ffffffbe;
 }
-
 
 .wrapper {
   position: relative;
@@ -229,12 +226,12 @@ a {
   display: none;
   /* Modifié */
 }
+header.navbar > a,
+header.navbar > a:visited {
+  color: var(--white) !important;
+}
 
 /**Header Part End*/
-
-
-
-
 
 /* Footer Part */
 
@@ -257,7 +254,7 @@ footer .input-group-text {
 /* Home Page */
 .untree-hero-container {
   background: var(--bg-image-url) no-repeat center center fixed,
-    linear-gradient(to bottom, #FFE4C4, #87CEEB);
+    linear-gradient(to bottom, #ffe4c4, #87ceeb);
   background-size: cover;
   position: relative;
   height: 500px;
@@ -287,15 +284,16 @@ footer .input-group-text {
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1;
-
-
 }
-
 
 .untree-subcontainer {
   height: 100%;
-  --background-gradient-color: var(--neutral-black) -80%, rgba(21, 28, 28, 0.1) 100%;
-  --background-gradient: radial-gradient(53.26% 0% at 50.25% 44.43%, var(--background-gradient-color));
+  --background-gradient-color: var(--neutral-black) -80%,
+    rgba(21, 28, 28, 0.1) 100%;
+  --background-gradient: radial-gradient(
+    53.26% 0% at 50.25% 44.43%,
+    var(--background-gradient-color)
+  );
   --background-gradient-position: center center;
   --background-gradient-size: contain;
   --background-gradient-repeat: no-repeat;
@@ -304,8 +302,8 @@ footer .input-group-text {
 }
 
 .untree-subcontainer :hover {
-
-  --background-gradient-color: var(--neutral-black) -85%, rgba(21, 28, 28, 0.3) 100%;
+  --background-gradient-color: var(--neutral-black) -85%,
+    rgba(21, 28, 28, 0.3) 100%;
 }
 
 /* Caroussel  */
@@ -351,8 +349,7 @@ section.setup .text-header h3 {
   color: var(--black);
 }
 
-section.setup .text-header p
- {
+section.setup .text-header p {
   font-size: 10px;
   font-weight: 400;
   line-height: 20px;
@@ -383,7 +380,6 @@ section.setup desc p {
 
 /* Home Page End Here */
 
-
 /*Our Store */
 .filter-card {
   background-color: var(--white);
@@ -409,7 +405,6 @@ section.setup desc p {
   line-height: 30px;
   color: var(--color-777777);
   cursor: pointer;
-
 }
 
 .filter-card .form-check-input:focus {
@@ -628,12 +623,10 @@ a:hover svg {
 
 /*a > div.card-body > div *,*/
 a > div * > h4.card-text,
-a.dropdown-item
- {
+a.dropdown-item {
   color: black !important;
 }
 /* Product card End Here*/
-
 
 /* Contact Page | Section */
 
@@ -664,7 +657,7 @@ a.dropdown-item
   gap: 15px;
 }
 
-.contact-inner-wrapper>div {
+.contact-inner-wrapper > div {
   width: 48%;
 }
 
@@ -705,7 +698,7 @@ a.dropdown-item
     text-align: center;
   }
 
-  .contact-inner-wrapper>div {
+  .contact-inner-wrapper > div {
     width: 100%;
     text-align: inherit;
     align-items: center;
@@ -715,7 +708,6 @@ a.dropdown-item
     display: inline-flex;
     align-content: center;
   }
-
 }
 
 /* Contact Page ends */
@@ -742,7 +734,7 @@ form {
 }
 
 a,
-a:visited > p{
+a:visited > p {
   color: var(--neutral-black);
 }
 
@@ -785,7 +777,7 @@ button {
   bottom: -10px;
 }
 
-.instructions>svg {
+.instructions > svg {
   margin-right: 0.25rem;
 }
 
@@ -836,18 +828,18 @@ button {
 }
 
 .gradial-background::before {
-  content: '';
+  content: "";
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: conic-gradient(#77C3FD, #6D7CFD, #B3AAFC);
+  background-image: conic-gradient(#77c3fd, #6d7cfd, #b3aafc);
   filter: blur(1px);
   z-index: -1;
 }
 
-.rounded-box-white{
+.rounded-box-white {
   background-color: #fff;
   border-radius: var(--border-radius-sm);
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
@@ -884,8 +876,5 @@ button {
 }
 
 /* login signin  page end */
-
-
-
 
 /* {All started here} */

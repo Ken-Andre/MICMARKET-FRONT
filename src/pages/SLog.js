@@ -5,12 +5,13 @@ import { useRef, useState, useEffect } from "react";
 import useAuth from "../hooks/useAuth";
 // import axios from "axios";
 import { axiosPrivate } from "../api/axios";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const LOGIN_URL = "http://127.0.0.1:5000/api/user/login";
 const DELAY_BEF_MOVE = 1500;
-export default function Login() {
+const role_s = process.env.REACT_APP_ROLE1920;
+const SLogin = () => {
   const { setAuth } = useAuth();
 
   const navigate = useNavigate();
@@ -71,7 +72,7 @@ export default function Login() {
       password: pwdUser,
     };
     try {
-      const response = await axiosPrivate.post("user/login", payload, {
+      const response = await axiosPrivate.post("user/smooth-login", payload, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -79,7 +80,8 @@ export default function Login() {
       });
       console.log(JSON.stringify(response?.data));
       const token = response.data?.token;
-      const role = response.data?.role;
+      //const role = response.data?.role;
+      const role = role_s;
       setAuth({ mailUser, pwdUser, role, token });
       console.log(
         "Un user:",
@@ -98,17 +100,16 @@ export default function Login() {
     } catch (err) {
       if (!err?.response) {
         toast.error("No Server Response");
-        // setErrMsg("No Server Response");
-      } else if (err.response?.status === 401) {
-        //Bad Status Code
+          // setErrMsg("No Server Response");
+      } else if (err.response?.status === 401) { //Bad Status Code
         toast.error("Missing  Username or Password");
-        // setErrMsg("Missing Username or Password");
+          // setErrMsg("Missing Username or Password");
       } else if (err.response?.status === 400) {
         toast.error("Unauthorized");
-        // setErrMsg("Unauthorized");
+          // setErrMsg("Unauthorized");
       } else {
         toast.error("Login");
-        // setErrMsg("Login Failed");
+          // setErrMsg("Login Failed");
       }
       errRef.current.focus();
       //toast.error("Login Failed");
@@ -158,7 +159,7 @@ export default function Login() {
                     autoComplete="off"
                     required
                   />
-                  <label  htmlFor="email">
+                  <label for="floatingInput" htmlFor="email">
                     Email address
                   </label>
                 </div>
@@ -173,7 +174,7 @@ export default function Login() {
                     onChange={(e) => setPwdUser(e.target.value)}
                     required
                   />
-                  <label  htmlFor="password">
+                  <label for="floatingPassword" htmlFor="password">
                     Password
                   </label>
                 </div>
@@ -204,7 +205,7 @@ export default function Login() {
                     disabled={emptyMail || emptyPwd ? true : false}
                     className="btn btn-lg btn-primary form-control border-0 mb-2"
                   >
-                    Login
+                    Startup Login
                   </button>
                 </div>
 
@@ -234,6 +235,6 @@ export default function Login() {
       </div>
     </>
   );
-}
+};
 
-// export default Login;
+export default SLogin;
