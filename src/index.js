@@ -1,8 +1,22 @@
 import React from 'react';
-import { createRoot } from 'react-dom/client';
+import ReactDOM from 'react-dom/client';
+// import './index.css';
+import './main.css';
 import App from './App';
 
-const container = document.getElementById('root');
-const root = createRoot(container);
+// import { store } from './app/store'
+// import { Provider } from 'react-redux'
 
-root.render(<App />);
+import { AuthProvider } from './context/AuthProvider';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+
+
+root.render(
+<AuthProvider>
+    <App />
+</AuthProvider>
+
+);

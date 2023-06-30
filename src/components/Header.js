@@ -44,7 +44,9 @@ const Header = () => {
             </div>
             <div className='col-5'>
               <div className='header-upper-links d-flex align-items-center justify-content-between'>
-                <div>
+
+                {/* Pour plus tard la fonction compare, le rends irresponsive, so ... */}
+                {/* <div>
                   <Link
                     className="d-flex align-items-center gap-10 text-white"
                   >
@@ -53,8 +55,11 @@ const Header = () => {
                       Compare <br /> Startups
                     </p>
                   </Link>
-                </div>
-                <div>
+                </div> */}
+
+
+                {/* On est pas dans un ecommerce, so... */}
+                {/* <div>
                   <Link
                     className="d-flex align-items-center gap-10 text-white"
                   >
@@ -63,7 +68,7 @@ const Header = () => {
                       Favourite <br /> WishList
                     </p>
                   </Link>
-                </div>
+                </div> */}
                 <div>
                   <Link
                    className="d-flex align-items-center gap-10 text-white"
@@ -104,7 +109,7 @@ const Header = () => {
                     >
                       <img src="images/menu.svg" alt="" />
                       <span className="me-5 d-inline-block">
-                        Shop Categories
+                        All Categories
                       </span>
                     </button>
                     <ul
@@ -132,8 +137,8 @@ const Header = () => {
                 <div className='menu-links'>
                   <div className='d-flex align-items-center gap-15'>
                     <NavLink to="/">Home</NavLink>
-                    <NavLink to="/">Our Store</NavLink>
-                    <NavLink to="/">Blogs</NavLink>
+                    <NavLink to="/shop">Our Store</NavLink>
+                    {/* <NavLink to="/">Blogs</NavLink> */}
                     <NavLink to="/contact">Contact</NavLink>
                   </div>
                 </div>
