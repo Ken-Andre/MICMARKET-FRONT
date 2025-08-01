@@ -44,3 +44,9 @@ You don't have to ever use `eject`. The curated feature set is suitable for smal
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+## Deployment on Vercel
+
+1. Install the [Vercel CLI](https://vercel.com/docs/cli).
+2. Create a `.env` file based on `.env.example` and set the required values.
+3. Run `vercel` and follow the prompts. Vercel will run `npm run build` and deploy the contents of the `build` directory.

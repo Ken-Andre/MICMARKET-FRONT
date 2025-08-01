@@ -5,9 +5,8 @@ const Welcome = () => {
     const navigate = useNavigate();
 
     const logout = useLogout();
-    const signOut = async () => {
-        // if used in more components, this should be in context
-        // axios to /logout endpoint
+    
+    const handleSignOut = async () => {
         await logout();
         navigate('/');
     }
@@ -26,7 +25,7 @@ const Welcome = () => {
             <br />
             <Link to="/linkpage">Go to the link page</Link>
             <div className="flexGrow">
-                <button onClick={logout}>Sign Out</button>
+                <button onClick={handleSignOut}>Sign Out</button>
             </div>
         </section>
     )

@@ -1,10 +1,13 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useCallback } from 'react';
+import axios from 'axios';
+import { useState } from 'react';
+import "./SearchBar.css"
 const SearchBar = ({ posts, setSearchResults }) => {
   const handleSubmit = (e) => e.preventDefault();
 
-  const handleSearchChange = (e) => {
+  const handleSearchChange = useCallback((e) => {
     if (!e.target.value) return setSearchResults(posts);
     console.log(e.target.value, "before research found");
     const resultsArray = posts.filter(
@@ -19,7 +22,7 @@ const SearchBar = ({ posts, setSearchResults }) => {
     );
     //|| post.subcategory.includes(e.target.value)
     setSearchResults(resultsArray);
-  };
+  }, [posts, setSearchResults]);
   useEffect(() => {
     console.log("from searchbar:", posts);
   }, [posts, handleSearchChange]);

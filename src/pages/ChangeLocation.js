@@ -1,5 +1,5 @@
 // ChangeLocation.js
-import React,{useState, useEffect} from 'react';
+import React, { useEffect, useState, useCallback } from "react";
 import {
   MDBCol,
   MDBContainer,
@@ -22,9 +22,9 @@ const [newaddress,setNewAddress] = useState("Bay Area, San Francisco, CA");
 
  
 
-const handlesetNewAddress = (e) => {
+const handlesetNewAddress = useCallback((e) => {
   setNewAddress(e.target.value);
-};
+}, []);
   
 useEffect(() => {
   console.log("The New Address:", newaddress);
