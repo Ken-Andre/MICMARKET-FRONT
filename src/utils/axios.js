@@ -1,12 +1,14 @@
 import axios from 'axios';
 
-const baseURLAPI = process.env.REACT_APP_API_BASE_URL;
+const apiBaseUrl = process.env.REACT_APP_API_URL;
 
 export function axf() {
-  return axios.create({ baseURLAPI });
+  return axios.create({ 
+    baseURL: micmarketApiUrl 
+  });
 }
 export const api = axios.create({
-    baseURL: 'https://jsonplaceholder.typicode.com'
+    baseURL: process.env.REACT_APP_POSTS_API_URL
 })
 
 export const getPosts = async () => {

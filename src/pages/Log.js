@@ -8,7 +8,8 @@ import { axiosPrivate } from "../api/axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const LOGIN_URL = "http://127.0.0.1:5000/api/user/login";
+const LOGIN_URL = `${process.env.REACT_APP_API_URL}/api/user/login`;
+const STARTUP_LOGIN_URL = `${process.env.REACT_APP_API_URL}/api/user/smooth-login`;
 const DELAY_BEF_MOVE = 1500;
 export default function Login() {
   const { setAuth } = useAuth();

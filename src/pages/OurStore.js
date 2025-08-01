@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { getPosts } from "../utils/axios";
 import axios from "axios";
 import Meta from "../components/Meta";
 import ProductCard from "../components/ProductCard";
@@ -12,48 +11,36 @@ import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 
 const OurStore = () => {
   const [grid, setGrid] = useState(2);
-  const [games, setGames] = useState([]);
-  const [posts, setPosts] = useState([]);
+  const [startups, setStartups] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
-  const [filteredGames, setFilteredGames] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
   const [query, setQuery] = useState("");
-  const [isFilterOpen, setIsFilterOpen] = useState(false); // ajouter l'état pour gérer l'affichage de la section de tri
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   useEffect(() => {
-    axios
-      .get(
-        `https://rawg.io/api/games?key=${process.env.REACT_APP_RAWG}${query}`
-      )
-      .then((response) => {
-        setGames(response.data.results);
-        setPosts(response.data.results);
-        setSearchResults(response.data.results);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    const fetchStartups = async () => {
+      setIsLoading(true);
+      setError(null);
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_API_URL}/api/startups${query ? `?${query}` : ''}`
+        );
+        setStartups(response.data);
+        setSearchResults(response.data);
+      } catch (error) {
+        console.error('Erreur lors de la récupération des startups:', error);
+        setError(error.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchStartups();
   }, [query]);
 
-  useEffect(() => {
-    getPosts().then((json) => {
-      setPosts(json);
-      setSearchResults(json);
-    });
-  }, []);
-
-  useEffect(() => {
-    axios
-      .get(`https://rawg.io/api/games?key=${process.env.REACT_APP_RAWG}`)
-      .then((response) => {
-        setGames(response.data.results);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, []);
-
   const toggleFilter = () => {
-    setIsFilterOpen(!isFilterOpen); // basculer l'état de la section de tri
+    setIsFilterOpen(!isFilterOpen);
   };
 
   return (
@@ -149,20 +136,20 @@ const OurStore = () => {
                 {/* The SearchBar */}
                 <div className="d-flex align-items-center gap-10 justify-content-center">
                   <SearchBar
-                    posts={posts}
+                    posts={startups}
                     setSearchResults={setSearchResults}
                     size="sm"
                     placeholder="Search a specific Startup ..."
                   />
                 </div>
                 <div className="d-flex align-items-center gap-10 justify-content-end">
-                  {searchResults && Array.isArray(searchResults) && (
+                  {isLoading && <p className="mb-0">Loading...</p>}
+                  {error && <p className="text-danger mb-0">Error: {error}</p>}
+                  {!isLoading && !error && searchResults && Array.isArray(searchResults) && (
                     <p className="totalproducts mb-0">
                       {searchResults.length} Startups
                     </p>
                   )}
-                  {!games && "Loading..."}
-                  {games && !Array.isArray(games) && "Invalid data format"}
                 </div>
               </div>
               {/* Liste de tous les produits */}
