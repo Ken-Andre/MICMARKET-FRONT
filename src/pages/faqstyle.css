@@ -1,0 +1,31 @@
+.root {
+  background-color: #fff;
+  padding: 16px;
+}
+
+.title {
+  margin-bottom: 16px;
+  font-weight: bold;
+  color: #000;
+}
+
+
+
+.message {
+  margin-top: 16px;
+  color: #999;
+  font-style: italic;
+}
+
+.contactButton {
+  background-color: #f70;
+  color: #fff;
+  font-weight: bold;
+  border-radius: 13%;
+  padding: 8px 20px;
+  margin-top: 16px;
+}
+ .MuiAccordionSummary-root {
+/* Add  styles for the accordion section */
+  background-color: #f0f0f0;
+}

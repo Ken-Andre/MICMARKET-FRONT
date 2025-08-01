@@ -1,0 +1,7 @@
+The desiredcomponent	Mycomponents
+index	index
+App(Not the browserRouter but directly the SearhGroup Component for rely SearchBar and ListPage)	App(Only the BrowserRouter off all components)
+App	OurStore
+SearchBar	SearchBar
+ListPage	ListStartupPage
+Post	ProductCard	

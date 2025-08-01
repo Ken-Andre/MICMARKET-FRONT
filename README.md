@@ -45,7 +45,7 @@ You can learn more in the [Create React App documentation](https://facebook.gith
 
 To learn React, check out the [React documentation](https://reactjs.org/).
 
-## Deployment to Vercel
+
 
 1. Push this repository to a Git provider (GitHub, GitLab, etc.).
 2. Create a new project on [Vercel](https://vercel.com) and import the repository.
