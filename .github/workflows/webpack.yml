@@ -21,7 +21,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [ 22.x]
+        node-version: [22.x]
 
     steps:
     - uses: actions/checkout@v4
@@ -53,4 +53,4 @@ jobs:
       id-token: write
     steps:
       - id: deployment
-        uses: actions/deploy-pages@v1
+        uses: actions/deploy-pages@v4
