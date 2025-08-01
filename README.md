@@ -45,8 +45,9 @@ You can learn more in the [Create React App documentation](https://facebook.gith
 
 To learn React, check out the [React documentation](https://reactjs.org/).
 
-## Deployment on Vercel
 
-1. Install the [Vercel CLI](https://vercel.com/docs/cli).
-2. Create a `.env` file based on `.env.example` and set the required values.
-3. Run `vercel` and follow the prompts. Vercel will run `npm run build` and deploy the contents of the `build` directory.
+
+1. Push this repository to a Git provider (GitHub, GitLab, etc.).
+2. Create a new project on [Vercel](https://vercel.com) and import the repository.
+3. Vercel will detect the build command `npm run build` and the `build` output directory.
+4. After the build finishes, your React application will be served using the `vercel.json` configuration.
