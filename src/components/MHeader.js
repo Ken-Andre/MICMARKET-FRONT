@@ -37,12 +37,9 @@ const MHeader = () => {
 
   return (
     <>
-      <header className="navbar navbar-expand-lg d-flex justify-content-center text-bg-dark flex-wrap align-items-center justify-content-md-between py-2 w-100">
-        <div className="navbar-brand col-lg-auto  ">
-          <NavLink
-            to="/"
-            className="d-inline-flex link-body-emphasis text-white text-decoration-none"
-          >
+      <header className="modern-navbar navbar navbar-expand-lg flex-wrap align-items-center justify-content-between py-2 w-100">
+        <div className="navbar-brand col-lg-auto">
+          <NavLink to="/" className="d-inline-flex link-body-emphasis text-decoration-none">
             {/* <svg className="bi" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg> */}
             Dev Kyan
           </NavLink>
@@ -50,38 +47,27 @@ const MHeader = () => {
 
         <ul className="nav nav-masthead justify-content-center mx-auto d-flex align-items-center">
           <li className="nav-items">
-            <NavLink
-              to="/"
-              className="text-white  nav-link px-2 link-secondary"
-            >
+            <NavLink to="/" className="nav-link px-2">
               Home
             </NavLink>
           </li>
           <li className="nav-items">
-            <NavLink to="/categories" className="text-white nav-link px-2">
+            <NavLink to="/categories" className="nav-link px-2">
               All Category
             </NavLink>
           </li>
           <li className="nav-items">
-            <NavLink to="/contact" className="text-white nav-link px-2">
+            <NavLink to="/contact" className="nav-link px-2">
               Contact
             </NavLink>
           </li>
         </ul>
         {showLoginGroup ? (
-          <div className="text-end ">
-            <NavLink
-              to="/auth/login"
-              type="button"
-              className="btn btn-outline-primary me-2"
-            >
+          <div className="text-end">
+            <NavLink to="/auth/login" type="button" className="btn btn-outline-primary me-2">
               Login
             </NavLink>
-            <NavLink
-              to="/auth/signup"
-              type="button"
-              className="btn btn-primary"
-            >
+            <NavLink to="/auth/signup" type="button" className="btn btn-primary">
               Sign-In
             </NavLink>
           </div>

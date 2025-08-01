@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseURLAPI = 'localhost:5000/';
+const baseURLAPI = process.env.REACT_APP_API_BASE_URL;
 
 export function axf() {
   return axios.create({ baseURLAPI });
