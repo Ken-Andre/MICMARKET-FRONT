@@ -1,40 +1,43 @@
-import React, { useState } from "react";
-
-import { u } from "react-auth-kit";
-
-import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
+import React from 'react';
+import DashboardLayout from './DashboardLayout';
 import {
   AiOutlineDashboard,
-  AiOutlineShoppingCart,
   AiOutlineUser,
-  AiOutlineBgColors,
-  AiOutlineAccountBook,
-  AiOutlineProfile,
-} from "react-icons/ai";
-import { useLocation } from "react-router";
-import { Link, useParams } from "react-router-dom";
-import { Outlet } from "react-router-dom";
-import FooterProfile from "./FooterProfile";
-import { ImBlog } from "react-icons/im";
-import { IoIosNotifications } from "react-icons/io";
-import { FaClipboardList, FaBloggerB, FaWpforms } from "react-icons/fa";
-import { SiBrandfolder } from "react-icons/si";
-import { BiCategoryAlt } from "react-icons/bi";
-import { Layout, Menu, theme } from "antd";
-import { useNavigate } from "react-router-dom";
-const { Header, Sider, Content } = Layout;
+  AiOutlineShoppingCart,
+  AiOutlineEnvironment,
+  AiOutlineLock,
+} from 'react-icons/ai';
 
-
+const menuItems = [
+    {
+        key: '/user',
+        icon: <AiOutlineUser />,
+        label: 'Profile',
+    },
+    {
+        key: '/user/overview',
+        icon: <AiOutlineDashboard />,
+        label: 'Overview',
+    },
+    {
+        key: '/user/cart',
+        icon: <AiOutlineShoppingCart />,
+        label: 'Cart',
+    },
+    {
+        key: '/user/change-location',
+        icon: <AiOutlineEnvironment />,
+        label: 'Change Location',
+    },
+    {
+        key: '/user/change-password',
+        icon: <AiOutlineLock />,
+        label: 'Change Password',
+    },
+];
 
 const UserLayout = () => {
-
-  return (
-     <>
-     {/* Hello! */}
-     <Outlet />
-     <FooterProfile />
-     </>
-  );
+    return <DashboardLayout menuItems={menuItems} />;
 };
 
 export default UserLayout;

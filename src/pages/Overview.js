@@ -1,126 +1,64 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import {
-  MDBCol,
-  MDBContainer,
-  MDBRow,
-  MDBCard,
-  MDBCardText,
-  MDBCardBody,
-  MDBCardImage,
-  MDBBtn,
-  MDBBreadcrumb,
-  MDBBreadcrumbItem,
-  MDBProgress,
-  MDBProgressBar,
-  MDBIcon,
-  MDBListGroup,
-  MDBListGroupItem
-} from 'mdb-react-ui-kit';
+import { Card, Descriptions, Button, Spin, Alert } from 'antd';
+import { EditOutlined } from '@ant-design/icons';
 
 const Overview = () => {
-  const [userInfo, setUserInfo] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+    const [userInfo, setUserInfo] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchUserInfo = async () => {
-      try {
-        const response = await axios.get('http://localhost:5000/api/user');
-        setUserInfo(response.data);
-        setIsLoading(false);
-      } catch (error) {
-        console.error(error);
-        setIsLoading(false);
-        const fakeData = {
-    "firstname" : "Johnatan Smith",
-    "lastname" : "Dohicou Kopse",
-    "email" : "jonathan.dohicou@mail.com",
-    "mobile" : "+237 687654321",
-    "address" : "Bay Area, San Francisco, USA"
-};
-        setUserInfo(fakeData);
-      }
+    useEffect(() => {
+        const fetchUserInfo = async () => {
+            try {
+                const response = await axios.get('http://localhost:5000/api/user');
+                setUserInfo(response.data);
+            } catch (error) {
+                console.error(error);
+                setError(error);
+                 const fakeData = {
+                    "firstname" : "Johnatan Smith",
+                    "lastname" : "Dohicou Kopse",
+                    "email" : "jonathan.dohicou@mail.com",
+                    "mobile" : "+237 6784321",
+                    "address" : "Bay Area, San Francisco, USA"
+                };
+                setUserInfo(fakeData);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchUserInfo();
+    }, []);
+
+    const handleEditUser = async () => {
+        // Placeholder for edit functionality
+        console.log("Edit user clicked");
     };
-
-    fetchUserInfo();
-  }, []);
-
-  const handleEditUser = async () => {
-    try {
-      const response = await axios.put('http://localhost:5000/api/user/edit-user');
-      console.log(response.data);
-    } catch (error) {
-      console.error(error);
+    
+    if (isLoading) {
+        return <Spin size="large" />;
     }
-  };
 
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
+    if (error) {
+        return <Alert message="Error" description="Failed to load user information." type="error" showIcon />;
+    }
 
-  if (error) {
-    return <p>Sorry, an error occurred: {error.message}</p>;
-  }
-
-  return (
-    <div>
-      <h1>Overview</h1>
-      <p>This is the Overview page.</p>
-      <MDBCard className="mb-4">
-        <MDBCardBody>
-          <MDBRow>
-            <MDBCol sm="3">
-              <MDBCardText>Firstname</MDBCardText>
-            </MDBCol>
-            <MDBCol sm="9">
-              <MDBCardText className="text-muted">{userInfo.firstname}</MDBCardText>
-            </MDBCol>
-          </MDBRow>
-          <hr />
-          <MDBRow>
-            <MDBCol sm="3">
-              <MDBCardText>Lastname</MDBCardText>
-            </MDBCol>
-            <MDBCol sm="9">
-              <MDBCardText className="text-muted">{userInfo.lastname}</MDBCardText>
-            </MDBCol>
-          </MDBRow>
-          <hr />
-          <MDBRow>
-            <MDBCol sm="3">
-              <MDBCardText>Email</MDBCardText>
-            </MDBCol>
-            <MDBCol sm="9">
-              <MDBCardText className="text-muted">{userInfo.email}</MDBCardText>
-            </MDBCol>
-          </MDBRow>
-          <hr />
-          <MDBRow>
-            <MDBCol sm="3">
-              <MDBCardText>Mobile</MDBCardText>
-            </MDBCol>
-            <MDBCol sm="9">
-              <MDBCardText className="text-muted">{userInfo.mobile}</MDBCardText>
-            </MDBCol>
-          </MDBRow>
-          <hr />
-          <MDBRow>
-            <MDBCol sm="3">
-              <MDBCardText>Address</MDBCardText>
-            </MDBCol>
-            <MDBCol sm="9">
-              <MDBCardText className="text-muted">{userInfo.address}</MDBCardText>
-            </MDBCol>
-          </MDBRow>
-        </MDBCardBody>
-      </MDBCard>
-      <MDBBtn color="primary" onClick={handleEditUser}>
-        Edit User
-        <MDBIcon fas icon="edit" className="ms-2" />
-      </MDBBtn>
-    </div>
-  );
+    return (
+        <Card title="User Overview">
+            <Descriptions bordered>
+                <Descriptions.Item label="Firstname">{userInfo.firstname}</Descriptions.Item>
+                <Descriptions.Item label="Lastname">{userInfo.lastname}</Descriptions.Item>
+                <Descriptions.Item label="Email">{userInfo.email}</Descriptions.Item>
+                <Descriptions.Item label="Mobile">{userInfo.mobile}</Descriptions.Item>
+                <Descriptions.Item label="Address" span={2}>{userInfo.address}</Descriptions.Item>
+            </Descriptions>
+            <Button type="primary" icon={<EditOutlined />} onClick={handleEditUser} style={{ marginTop: '24px' }}>
+                Edit User
+            </Button>
+        </Card>
+    );
 };
 
 export default Overview;

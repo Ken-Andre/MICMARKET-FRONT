@@ -1,63 +1,42 @@
-// ChangeLocation.js
-import React, { useEffect, useState, useCallback } from "react";
-import {
-  MDBCol,
-  MDBContainer,
-  MDBRow,
-  MDBCard,
-  MDBCardText,
-  MDBCardBody,
-  MDBCardImage,
-  MDBBtn,
-  MDBBreadcrumb,
-  MDBBreadcrumbItem,
-  MDBProgress,
-  MDBProgressBar,
-  MDBIcon,
-  MDBListGroup,
-  MDBListGroupItem
-} from 'mdb-react-ui-kit';
+import React, { useState } from 'react';
+import { Card, Form, Input, Button, Typography, notification } from 'antd';
+
+const { Title, Text } = Typography;
+
 const ChangeLocation = () => {
-const [newaddress,setNewAddress] = useState("Bay Area, San Francisco, CA");
+    const [form] = Form.useForm();
+    const [previousAddress, setPreviousAddress] = useState("Bay Area, San Francisco, CA");
 
- 
+    const onFinish = (values) => {
+        // Here you would typically make an API call to update the address
+        console.log("New Address:", values.newAddress);
+        notification.success({ message: 'Address updated successfully!' });
+        setPreviousAddress(values.newAddress);
+        form.resetFields();
+    };
 
-const handlesetNewAddress = useCallback((e) => {
-  setNewAddress(e.target.value);
-}, []);
-  
-useEffect(() => {
-  console.log("The New Address:", newaddress);
-}, [newaddress, handlesetNewAddress]);
-  return (
-    <>
-      <h1>Change Location</h1>
-      <p>This is the Change Location tab</p>
-      <MDBCard className="mb-4">
-              <MDBCardBody>
-                <MDBRow>
-                  <MDBCol sm="3">
-                    <MDBCardText>Previous Address</MDBCardText>
-                  </MDBCol>
-                  <MDBCol sm="9">
-                    <MDBCardText className="text-muted">Bay Area, San Francisco, CA</MDBCardText>
-                  </MDBCol>
-                </MDBRow>
-                <hr />
-                <MDBRow>
-                  <MDBCol sm="3">
-                    <MDBCardText>New Address</MDBCardText>
-                  </MDBCol>
-                  <MDBCol sm="9" >
-                    <input className=" border-0" name="new address" value={newaddress} onChange={handlesetNewAddress} 
-                    />{/*</input>*/}
-                  </MDBCol>
-                </MDBRow>
-              </MDBCardBody>
-            </MDBCard>
-
-    </>
-  );
+    return (
+        <Card>
+            <Title level={2}>Change Location</Title>
+            <Text type="secondary" style={{ display: 'block', marginBottom: '24px' }}>
+                Current Address: {previousAddress}
+            </Text>
+            <Form form={form} onFinish={onFinish} layout="vertical">
+                <Form.Item
+                    name="newAddress"
+                    label="New Address"
+                    rules={[{ required: true, message: 'Please input your new address!' }]}
+                >
+                    <Input />
+                </Form.Item>
+                <Form.Item>
+                    <Button type="primary" htmlType="submit">
+                        Update Address
+                    </Button>
+                </Form.Item>
+            </Form>
+        </Card>
+    );
 };
 
 export default ChangeLocation;

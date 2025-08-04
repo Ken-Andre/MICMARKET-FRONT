@@ -1,19 +1,30 @@
-import ProductCard from "./ProductCard"
+import React from 'react';
+import { List, Typography } from 'antd';
+import ProductCard from './ProductCard';
 
-const ListStartup = ({ searchResults, zind }) => {
+const { Text } = Typography;
 
-    const results = searchResults.map(post => <ProductCard key={post.id} post={post} />)
-
-    const content = results?.length ? results : <article><p>No Matching Startups</p></article>
-
+const ListStartup = ({ searchResults }) => {
     return (
+        <List
+            grid={{
+                gutter: 16,
+                xs: 1,
+                sm: 2,
+                md: 2,
+                lg: 3,
+                xl: 4,
+                xxl: 4,
+            }}
+            dataSource={searchResults}
+            renderItem={(post) => (
+                <List.Item>
+                    <ProductCard post={post} />
+                </List.Item>
+            )}
+            locale={{ emptyText: <Text>No Matching Startups</Text> }}
+        />
+    );
+};
 
-        <div className={`product-list pb-5 zind-${zind}`}>
-                {/* LISTE PRODUITS DIV */}
-                {/* {filteredProducts.map((product) => ( */}
-                {content}
-                {/* ))} */}
-              </div>
-    )
-}
-export default ListStartup
+export default ListStartup;

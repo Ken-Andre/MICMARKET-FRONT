@@ -1,45 +1,29 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Tab from '@mui/material/Tab';
-import TabContext from '@mui/lab/TabContext';
-import TabList from '@mui/lab/TabList';
-import TabPanel from '@mui/lab/TabPanel';
+import React from 'react';
+import { Tabs } from 'antd';
 import Overview from './Overview';
 import ChangeLocation from './ChangeLocation';
 import ChangePassword from './ChangePassword';
 import Cart from './Cart';
 
-export default function ProfileDashboard() {
-  const [value, setValue] = React.useState('overview');
+const { TabPane } = Tabs;
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+const ProfileDashboard = () => {
+    return (
+        <Tabs defaultActiveKey="overview">
+            <TabPane tab="Overview" key="overview">
+                <Overview />
+            </TabPane>
+            <TabPane tab="Change Location" key="change-location">
+                <ChangeLocation />
+            </TabPane>
+            <TabPane tab="Change Password" key="change-password">
+                <ChangePassword />
+            </TabPane>
+            <TabPane tab="Cart" key="cart">
+                <Cart />
+            </TabPane>
+        </Tabs>
+    );
+};
 
-  return (
-    <Box sx={{ width: '100%', typography: 'body1' }}>
-      <TabContext value={value} >
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <TabList onChange={handleChange} aria-label="lab API tabs example" variant="scrollable" scrollButtons="auto">
-            <Tab label="Overview" value="overview" />
-            <Tab label="Change Location" value="change-location" />
-            <Tab label="Change Password" value="change-password" />
-            <Tab label="Cart" value="4" />
-          </TabList>
-        </Box>
-        <TabPanel value="overview">
-          <Overview />
-        </TabPanel>
-        <TabPanel value="change-location">
-          <ChangeLocation />
-        </TabPanel>
-        <TabPanel value="change-password">
-          <ChangePassword />
-        </TabPanel>
-        <TabPanel value="4">
-          <Cart />*/ A Cart Panel
-        </TabPanel>
-      </TabContext>
-    </Box>
-  );
-}
+export default ProfileDashboard;
