@@ -1,7 +1,26 @@
 import React from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink, Link, useNavigate } from 'react-router-dom';
 import { BsSearch } from 'react-icons/bs';
+import { useSelector, useDispatch } from 'react-redux';
+import { useLogoutMutation } from '../features/auth/authApiSlice';
+import { logOut, selectCurrentUser } from '../features/auth/authSlice';
+
 const Header = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const user = useSelector(selectCurrentUser);
+  const [logout] = useLogoutMutation();
+
+  const handleLogout = async () => {
+    try {
+      await logout().unwrap();
+      dispatch(logOut());
+      navigate('/');
+    } catch (err) {
+      console.error('Failed to logout: ', err);
+    }
+  };
+
   return (
     <>
       <header className="header-top-strip">
@@ -70,17 +89,24 @@ const Header = () => {
                   </Link>
                 </div> */}
                 <div>
-                  <Link
-                   className="d-flex align-items-center gap-10 text-white"
-                  >
-                    <img src='images/user.svg' alt='user' />
-                    <p className="mb-0">
-                      Log in <br /> My Account
-                    </p>
-                  </Link>
+                  {user ? (
+                    <button onClick={handleLogout} className="d-flex align-items-center gap-10 text-white bg-transparent border-0">
+                      <img src='/images/user.svg' alt='user' />
+                      <p className="mb-0">
+                        Logout
+                      </p>
+                    </button>
+                  ) : (
+                    <Link to="/auth/login" className="d-flex align-items-center gap-10 text-white">
+                      <img src='images/user.svg' alt='user' />
+                      <p className="mb-0">
+                        Log in <br /> My Account
+                      </p>
+                    </Link>
+                  )}
                 </div>
                 <div>
-                  <Link className='d-flex align-items-center gap-10 text-white'>
+                  <Link to="/user/cart" className='d-flex align-items-center gap-10 text-white'>
                     <img src='images/cart.svg' alt='cart' />
                     <div className='d-flex flex-column gap-10'>
                       <span className='badge bg-white text-dark'>0</span>

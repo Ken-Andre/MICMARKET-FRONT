@@ -1,22 +1,23 @@
 import React, { useRef, useState, useEffect } from "react";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
-import useAuth from "../hooks/useAuth";
-import { axiosPrivate } from "../api/axios";
+import { useDispatch } from "react-redux";
+import { setCredentials } from "../features/auth/authSlice";
+import { useStartupLoginMutation } from "../features/auth/authApiSlice";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Form, Input, Button, Checkbox, Typography } from "antd";
 import { MailOutlined, LockOutlined } from '@ant-design/icons';
 
 const { Title, Text, Link } = Typography;
-const role_s = process.env.REACT_APP_ROLE1920;
 
 const SLogin = () => {
-  const { setAuth } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
+  const from = location.state?.from?.pathname || "/funding";
   const errRef = useRef();
+  const dispatch = useDispatch();
 
+  const [startupLogin, { isLoading }] = useStartupLoginMutation();
   const [errMsg, setErrMsg] = useState("");
   const [persist, setPersist] = useState(false);
 
@@ -26,23 +27,17 @@ const SLogin = () => {
 
   const onFinish = async (values) => {
     const { email, password } = values;
-    const payload = { email, password };
     try {
-      const response = await axiosPrivate.post("user/smooth-login", payload, {
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
-      });
-      const token = response.data?.token;
-      const role = role_s;
-      setAuth({ mailUser: email, pwdUser: password, role, token });
+      const userData = await startupLogin({ email, password }).unwrap();
+      dispatch(setCredentials({ ...userData, email }));
       navigate(from, { replace: true });
       toast.success("Login Successful");
     } catch (err) {
-      if (!err?.response) {
+      if (!err?.originalStatus) {
         toast.error("No Server Response");
-      } else if (err.response?.status === 401) {
+      } else if (err.originalStatus === 400) {
         toast.error("Missing Username or Password");
-      } else if (err.response?.status === 400) {
+      } else if (err.originalStatus === 401) {
         toast.error("Unauthorized");
       } else {
         toast.error("Login Failed");

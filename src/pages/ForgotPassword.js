@@ -1,45 +1,28 @@
 import React, { useState } from "react";
 import BreadCrumb from "../components/BreadCrumb";
 import Meta from "../components/Meta";
-import { Link } from "react-router-dom";
-import { axiosPrivate } from "../api/axios";
+import { useForgotPasswordMutation } from "../features/auth/authApiSlice";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
 const ForgotPassword = () => {
   const [mailUser, setMailUser] = useState("");
+  const [forgotPassword, { isLoading }] = useForgotPasswordMutation();
 
   const handleForgotSubmit = async (e) => {
     e.preventDefault();
-    const payload = { email: mailUser };
     try {
-      const response = await axiosPrivate.post(
-        "user/forgot-password-token/",
-        payload
-      );
-      console.log("An email has been sent to you");
+      await forgotPassword(mailUser).unwrap();
       toast.success("Email sent successfully!");
     } catch (error) {
-      console.error(error);
-      if (
-        error.response &&
-        error.response.status === 500 &&
-        error.response.data.message === "User not found with this email"
-      ) {
+      if (error.originalStatus === 404) {
         toast.error("User not found with this email.");
       } else {
         toast.error("Failed to send email.");
       }
     }
   };
-
-  const handleClick = () => {
-    toast.success('Hello World!', {
-      position: 'top-center',
-    });
-  };
-  const notify = () => toast.success("Wow so easy !")
 
   return (
     <>

@@ -1,91 +1,90 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React from 'react';
 import { Card, Table, Button, Space, Typography, notification } from 'antd';
 import { DeleteOutlined, CheckOutlined } from '@ant-design/icons';
+import { useGetUserCartQuery, useEmptyCartMutation, useCreateOrderMutation } from '../features/user/userApiSlice';
+import { Link } from 'react-router-dom';
 
-const { Title } = Typography;
+const { Title, Text } = Typography;
 
 const Cart = () => {
-    const [cartItems, setCartItems] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const { data: cart, isLoading, isError, error } = useGetUserCartQuery();
+    const [emptyCart, { isLoading: isClearing }] = useEmptyCartMutation();
+    const [createOrder, { isLoading: isOrdering }] = useCreateOrderMutation();
 
-    useEffect(() => {
-        axios.get("{{base_url}}user/cart")
-            .then(response => {
-                setCartItems(response.data.cart);
-                setIsLoading(false);
-            })
-            .catch(error => {
-                console.error(error);
-                setIsLoading(false);
-                const fakeData = {
-                    cart: [
-                        { _id: '1', count: 2 },
-                        { _id: '2', count: 3 },
-                        { _id: '3', count: 1 },
-                    ],
-                };
-                setCartItems(fakeData.cart);
-            });
-    }, []);
-
-    const handleEmptyCart = () => {
-        axios.delete("{{base_url}}user/cart")
-            .then(response => {
-                setCartItems([]);
-                notification.success({ message: 'Cart emptied successfully!' });
-            })
-            .catch(error => {
-                console.log(error);
-                notification.error({ message: 'Failed to empty cart.' });
-            });
+    const handleEmptyCart = async () => {
+        try {
+            await emptyCart().unwrap();
+            notification.success({ message: 'Cart emptied successfully!' });
+        } catch (err) {
+            notification.error({ message: err.data?.message || 'Failed to empty cart.' });
+        }
     };
 
-    const handleCashOrder = () => {
-        axios.post("{{base_url}}user/cart/cash-order", { COD: true })
-            .then(response => {
-                console.log(response.data);
-                notification.success({ message: 'Order placed successfully!' });
-            })
-            .catch(error => {
-                console.log(error);
-                notification.error({ message: 'Failed to place order.' });
-            });
+    const handleCashOrder = async () => {
+        try {
+            await createOrder({ COD: true }).unwrap();
+            notification.success({ message: 'Order placed successfully!' });
+        } catch (err) {
+            notification.error({ message: err.data?.message || 'Failed to place order.' });
+        }
     };
 
     const columns = [
         {
-            title: 'ID',
-            dataIndex: '_id',
-            key: '_id',
+            title: 'Startup',
+            dataIndex: ['startup', 'name'],
+            key: 'startup',
+            render: (text, record) => <Link to={`/startup/${record.startup._id}`}>{text}</Link>,
         },
         {
-            title: 'Count',
-            dataIndex: 'count',
-            key: 'count',
+            title: 'Quantity',
+            dataIndex: 'quantity',
+            key: 'quantity',
+        },
+        {
+            title: 'Price',
+            dataIndex: ['startup', 'price'],
+            key: 'price',
+            render: (text) => `$${text}`,
         },
     ];
 
-    if (error) {
-        return <p>Sorry, an error occurred: {error.message}</p>;
+    if (isError) {
+        return <p>Sorry, an error occurred: {error.data?.message}</p>;
     }
 
     return (
         <Card>
-            <Title level={2}>Cart</Title>
+            <Title level={2}>Your Cart</Title>
             <Table
                 columns={columns}
-                dataSource={cartItems}
+                dataSource={cart?.startups || []}
                 loading={isLoading}
-                rowKey="_id"
+                rowKey={record => record.startup._id}
+                summary={pageData => {
+                    let total = 0;
+                    pageData.forEach(({ startup, quantity }) => {
+                        total += startup.price * quantity;
+                    });
+
+                    return (
+                        <>
+                            <Table.Summary.Row>
+                                <Table.Summary.Cell colSpan={2}><Text strong>Total</Text></Table.Summary.Cell>
+                                <Table.Summary.Cell>
+                                    <Text strong>${total.toFixed(2)}</Text>
+                                </Table.Summary.Cell>
+                            </Table.Summary.Row>
+                        </>
+                    );
+                }}
             />
             <Space style={{ marginTop: '24px' }}>
-                <Button type="primary" danger icon={<DeleteOutlined />} onClick={handleEmptyCart}>
+                <Button type="primary" danger icon={<DeleteOutlined />} onClick={handleEmptyCart} loading={isClearing}>
                     Empty Cart
                 </Button>
-                <Button type="primary" icon={<CheckOutlined />} onClick={handleCashOrder}>
-                    Cash Order
+                <Button type="primary" icon={<CheckOutlined />} onClick={handleCashOrder} loading={isOrdering}>
+                    Place Order
                 </Button>
             </Space>
         </Card>

@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { Layout, Select, Typography, Button, Drawer, Row, Col } from "antd";
+import { useGetStartupsQuery } from "../features/startups/startupsApiSlice";
+import { useGetProductsQuery } from "../features/products/productsApiSlice";
+import { Layout, Select, Typography, Button, Drawer, Row, Col, Segmented } from "antd";
 import { FilterOutlined } from '@ant-design/icons';
 import Meta from "../components/Meta";
 import FilterProduct from "../components/FilterProduct";
 import ListStartup from "../components/ListStartup";
+import ListProduct from "../components/ListProduct";
 import SearchBar from "../components/SearchBar";
 
 const { Sider, Content } = Layout;
@@ -12,38 +14,27 @@ const { Text } = Typography;
 const { Option } = Select;
 
 const OurStore = () => {
-    const [startups, setStartups] = useState([]);
+    const { data: startups, isLoading: isLoadingStartups, isError: isErrorStartups, error: errorStartups } = useGetStartupsQuery();
+    const { data: products, isLoading: isLoadingProducts, isError: isErrorProducts, error: errorProducts } = useGetProductsQuery();
+    const [displayType, setDisplayType] = useState('Startups');
     const [searchResults, setSearchResults] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState(null);
     const [query, setQuery] = useState("");
     const [isFilterOpen, setIsFilterOpen] = useState(false);
     const [sortOrder, setSortOrder] = useState("title-ascending");
 
     useEffect(() => {
-        const fetchStartups = async () => {
-            setIsLoading(true);
-            setError(null);
-            try {
-                const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/startups?${query}`);
-                setStartups(response.data);
-                setSearchResults(response.data);
-            } catch (error) {
-                console.error('Erreur lors de la récupération des startups:', error);
-                setError(error.message);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
-        fetchStartups();
-    }, [query]);
+        if (displayType === 'Startups' && startups) {
+            setSearchResults(startups);
+        } else if (displayType === 'Products' && products) {
+            setSearchResults(products);
+        }
+    }, [displayType, startups, products]);
 
     useEffect(() => {
         let sortedResults = [...searchResults];
         switch (sortOrder) {
             case "title-ascending":
-                sortedResults.sort((a, b) => a.name.localeCompare(b.name));
+                sortedResults.sort((a, b) => (a.name || a.title).localeCompare(b.name || b.title));
                 break;
             case "price-ascending":
                 sortedResults.sort((a, b) => (a.price || 0) - (b.price || 0));
@@ -68,9 +59,13 @@ const OurStore = () => {
         setIsFilterOpen(!isFilterOpen);
     };
 
+    const isLoading = isLoadingStartups || isLoadingProducts;
+    const isError = isErrorStartups || isErrorProducts;
+    const error = errorStartups || errorProducts;
+
     return (
         <>
-            <Meta title={"Browse Startup"} />
+            <Meta title={"Browse Our Store"} />
             <Layout>
                 <Sider width={250} theme="light" className="d-none d-md-block" style={{ padding: '24px' }}>
                     <FilterProduct setQuery={setQuery} />
@@ -87,13 +82,20 @@ const OurStore = () => {
                                 >
                                     Filters
                                 </Button>
-                                <Text className="d-none d-md-inline">{searchResults.length} Startups</Text>
+                                <Text className="d-none d-md-inline">{searchResults.length} {displayType}</Text>
                             </Col>
-                            <Col xs={24} md={12}>
+                            <Col xs={24} md={8}>
+                                <Segmented
+                                    options={['Startups', 'Products']}
+                                    value={displayType}
+                                    onChange={setDisplayType}
+                                />
+                            </Col>
+                            <Col xs={24} md={6}>
                                <SearchBar
-                                    posts={startups}
+                                    posts={displayType === 'Startups' ? startups : products}
                                     setSearchResults={setSearchResults}
-                                    placeholder="Search a specific Startup ..."
+                                    placeholder={`Search a specific ${displayType}...`}
                                 />
                             </Col>
                             <Col xs={24} md={6}>
@@ -111,8 +113,14 @@ const OurStore = () => {
                             </Col>
                         </Row>
                         {isLoading && <p>Loading...</p>}
-                        {error && <p>Error: {error}</p>}
-                        {!isLoading && !error && <ListStartup searchResults={searchResults} />}
+                        {isError && <p>Error: {error.data?.message}</p>}
+                        {!isLoading && !isError && (
+                            displayType === 'Startups' ? (
+                                <ListStartup searchResults={searchResults} />
+                            ) : (
+                                <ListProduct searchResults={searchResults} />
+                            )
+                        )}
                     </div>
                 </Content>
             </Layout>

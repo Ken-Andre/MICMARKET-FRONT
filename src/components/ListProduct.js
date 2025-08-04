@@ -1,10 +1,10 @@
 import React from 'react';
 import { List, Typography } from 'antd';
-import StartupCard from './StartupCard';
+import ProductCard from './ProductCard';
 
 const { Text } = Typography;
 
-const ListStartup = ({ searchResults }) => {
+const ListProduct = ({ searchResults }) => {
     return (
         <List
             grid={{
@@ -17,14 +17,14 @@ const ListStartup = ({ searchResults }) => {
                 xxl: 4,
             }}
             dataSource={searchResults}
-            renderItem={(startup) => (
+            renderItem={(product) => (
                 <List.Item>
-                    <StartupCard startup={startup} />
+                    <ProductCard product={product} />
                 </List.Item>
             )}
-            locale={{ emptyText: <Text>No Matching Startups</Text> }}
+            locale={{ emptyText: <Text>No Matching Products</Text> }}
         />
     );
 };
 
-export default ListStartup;
+export default ListProduct;

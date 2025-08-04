@@ -1,6 +1,7 @@
 import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Form, Input, Button, Typography, notification } from "antd";
+import { useRegisterMutation } from "../features/auth/authApiSlice";
 
 const { Title, Text, Link } = Typography;
 
@@ -8,39 +9,18 @@ const NAME_REGEX = /^(?=.{2,32}$)[a-zA-Z0-9]+([ ][a-zA-Z0-9]+|[ -][a-zA-Z0-9]+)*
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%&]).{8,24}$/;
 const MAIL_REGEX = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,})$/;
 const TEL_REGEX = /^((?=.{8,}$)[2-3-6]{1}((\s)|(-)?){0,1}([0-9]{2})((\s)|(-)?){0,1}([0-9]{2})((\s)|(-)?){0,1}([0-9]{2})((\s)|(-)?){0,1}([0-9]{2}))$/;
-const REGISTER_URL = `${process.env.REACT_APP_API_URL}/api/user/register`;
 
 const Startup = () => {
     const navigate = useNavigate();
     const [form] = Form.useForm();
+    const [register, { isLoading }] = useRegisterMutation();
 
-    const onFinish = (values) => {
+    const onFinish = async (values) => {
         const { firstname, lastname, email, password, mobile } = values;
-        const payload = { firstname, lastname, email, password, mobile, role: 'startup' }; // Add role for startup
+        const payload = { firstname, lastname, email, password, mobile, role: 'startup' };
 
-        fetch(REGISTER_URL, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload)
-        })
-        .then(response => {
-            if (!response.ok) {
-                if (response.status === 500) {
-                    notification.error({
-                        message: 'Registration Failed',
-                        description: 'A user with this email already exists.',
-                    });
-                } else {
-                     notification.error({
-                        message: 'Registration Failed',
-                        description: 'An unexpected error occurred. Please try again.',
-                    });
-                }
-                throw new Error('Registration failed');
-            }
-            return response.json();
-        })
-        .then(data => {
+        try {
+            await register(payload).unwrap();
             notification.success({
                 message: 'Registration Successful',
                 description: 'You can now log in with your new startup account.',
@@ -49,10 +29,19 @@ const Startup = () => {
             setTimeout(() => {
                 navigate('/auth/login');
             }, 1500);
-        })
-        .catch(err => {
-            console.error('Error:', err);
-        });
+        } catch (err) {
+            if (err?.originalStatus === 409) {
+                notification.error({
+                    message: 'Registration Failed',
+                    description: 'A user with this email already exists.',
+                });
+            } else {
+                 notification.error({
+                    message: 'Registration Failed',
+                    description: err.data?.message || 'An unexpected error occurred. Please try again.',
+                });
+            }
+        }
     };
 
     return (

@@ -1,81 +1,70 @@
-import React, { useState, useEffect } from "react";
-import { Rate, Card, Row, Col, Typography, Button, List, Form, Input, Modal, notification } from "antd";
-import useAuth from "../hooks/useAuth";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import axios from 'axios';
+import React, { useState } from "react";
+import { Rate, Card, Row, Col, Typography, Button, List, Form, Input, Modal, notification, InputNumber } from "antd";
+import { useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import { useGetStartupByIdQuery, useRateStartupMutation } from "../features/startups/startupsApiSlice";
+import { useAddToCartMutation } from "../features/user/userApiSlice";
+import { selectCurrentUser } from "../features/auth/authSlice";
 
 const { Title, Text, Paragraph } = Typography;
 
 const SingleProd = () => {
     const navigate = useNavigate();
     const { id } = useParams();
-    const [startup, setStartup] = useState({});
-    const [comments, setComments] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const { auth } = useAuth();
+    const { data: startup, isLoading, isError, error } = useGetStartupByIdQuery(id);
+    const [rateStartup, { isLoading: isRating }] = useRateStartupMutation();
+    const [addToCart, { isLoading: isAddingToCart }] = useAddToCartMutation();
+    const user = useSelector(selectCurrentUser);
     const [isModalVisible, setIsModalVisible] = useState(false);
+    const [quantity, setQuantity] = useState(1);
     const [form] = Form.useForm();
 
-    useEffect(() => {
-        const getStartupAndComments = async () => {
-            setLoading(true);
-            try {
-                const startupRes = await fetch(`https://rawg.io/api/games/${id}?key=${process.env.REACT_APP_RAWG}`);
-                const startupData = await startupRes.json();
-                setStartup(startupData);
-
-                const commentsRes = await fetch(`https://rawg.io/api/games/${id}/reviews?key=${process.env.REACT_APP_RAWG}`);
-                const commentsData = await commentsRes.json();
-                setComments(commentsData.results);
-            } catch (error) {
-                console.error("Failed to fetch startup or comments", error);
-            } finally {
-                setLoading(false);
-            }
-        };
-        getStartupAndComments();
-    }, [id]);
-
-    const handleBuyClick = () => {
-        if (auth.token) {
-            navigate(`/checkout/${id}`);
-        } else {
+    const handleAddToCart = async () => {
+        if (!user) {
             setIsModalVisible(true);
+            return;
+        }
+        try {
+            await addToCart({ cart: [{ _id: id, count: quantity, price: startup.price }] }).unwrap();
+            notification.success({ message: 'Startup added to cart successfully!' });
+        } catch (err) {
+            notification.error({ message: err.data?.message || 'Failed to add startup to cart.' });
         }
     };
 
-    const handleReviewSubmit = (values) => {
-        const payload = { ...values, startupId: id, userEmail: auth.mailUser };
-        axios.post("http://192.168.2.132:5000/api/user/startup", payload)
-            .then(response => {
-                notification.success({ message: 'Review submitted successfully!' });
-                form.resetFields();
-                // a revoir pour le rafraichissement des commentaires
-            })
-            .catch(err => {
-                notification.error({ message: 'Failed to submit review.' });
-            });
+    const handleReviewSubmit = async (values) => {
+        try {
+            await rateStartup({ id, ...values }).unwrap();
+            notification.success({ message: 'Review submitted successfully!' });
+            form.resetFields();
+        } catch (err) {
+            notification.error({ message: err.data?.message || 'Failed to submit review.' });
+        }
     };
     
-    if (loading) return <p>Loading...</p>;
+    if (isLoading) return <p>Loading...</p>;
+    if (isError) return <p>Error: {error.data?.message || 'Failed to fetch startup'}</p>;
 
     return (
         <div style={{ padding: '50px' }}>
             <Card>
                 <Row align="middle">
                     <Col span={4}>
-                        <img alt={startup.name} src={startup.background_image} style={{ width: '100%', borderRadius: '8px' }} />
+                        <img alt={startup.name} src={startup.images?.[0]} style={{ width: '100%', borderRadius: '8px' }} />
                     </Col>
                     <Col span={14} style={{ paddingLeft: '24px' }}>
                         <Title level={3}>{startup.name}</Title>
-                        <Text>{startup.address || "121 King Street, Melbourne Victoria 3000, Australia"}</Text>
+                        <Text>{startup.address || "Address not available"}</Text>
                     </Col>
                     <Col span={6} style={{ textAlign: 'right' }}>
-                        <Rate disabled allowHalf value={startup.rating} />
-                        <Text style={{ marginLeft: '8px' }}>({startup.rating})</Text>
-                        <Button type="primary" onClick={handleBuyClick} style={{ marginTop: '16px' }}>
-                            Acheter des actions
-                        </Button>
+                        <Rate disabled allowHalf value={startup.totalratings} />
+                        <Text style={{ marginLeft: '8px' }}>({startup.totalratings})</Text>
+                        <div style={{ marginTop: '16px' }}>
+                            <InputNumber min={1} max={startup.quantity} value={quantity} onChange={setQuantity} />
+                            <Button type="primary" onClick={handleAddToCart} loading={isAddingToCart} style={{ marginLeft: '8px' }}>
+                                Add to Cart
+                            </Button>
+                        </div>
                     </Col>
                 </Row>
             </Card>
@@ -84,29 +73,29 @@ const SingleProd = () => {
                 <Col md={16}>
                     <Card title="Reviews">
                         <List
-                            dataSource={comments}
+                            dataSource={startup.ratings}
                             renderItem={item => (
                                 <List.Item>
                                     <List.Item.Meta
-                                        title={item.user.username}
-                                        description={item.text}
+                                        title={item.postedby?.firstname}
+                                        description={item.comment}
                                     />
-                                    <Rate disabled defaultValue={item.rating} />
+                                    <Rate disabled defaultValue={item.star} />
                                 </List.Item>
                             )}
                         />
                     </Card>
                     <Card title="Add Your Review" style={{ marginTop: '32px' }}>
                         <Form form={form} onFinish={handleReviewSubmit}>
-                            <Form.Item name="rate" label="Rating" rules={[{ required: true }]}>
+                            <Form.Item name="star" label="Rating" rules={[{ required: true }]}>
                                 <Rate />
                             </Form.Item>
-                            <Form.Item name="comments" label="Comment" rules={[{ required: true }]}>
+                            <Form.Item name="comment" label="Comment" rules={[{ required: true }]}>
                                 <Input.TextArea rows={4} />
                             </Form.Item>
                             <Form.Item>
-                                <Button htmlType="submit" type="primary" disabled={!auth.token}>
-                                    {auth.token ? 'Submit Review' : 'You must be logged in to comment'}
+                                <Button htmlType="submit" type="primary" disabled={!user || isRating}>
+                                    {user ? 'Submit Review' : 'You must be logged in to comment'}
                                 </Button>
                             </Form.Item>
                         </Form>
@@ -117,10 +106,9 @@ const SingleProd = () => {
                         <Paragraph><strong>URL:</strong> <a href={startup.website} target="_blank" rel="noopener noreferrer">{startup.website}</a></Paragraph>
                         <Paragraph><strong>Email:</strong> {startup.email || 'N/A'}</Paragraph>
                         <Paragraph><strong>Téléphone:</strong> {startup.mobile || 'N/A'}</Paragraph>
-                        <Paragraph><strong>Description:</strong> {startup.description_raw || 'N/A'}</Paragraph>
+                        <Paragraph><strong>Description:</strong> {startup.description || 'N/A'}</Paragraph>
                         <Paragraph><strong>Catégorie:</strong> {startup.category || 'N/A'}</Paragraph>
-                        <Paragraph><strong>Sous-catégorie:</strong> {startup.genre || 'N/A'}</Paragraph>
-                        <Paragraph><strong>Date de création:</strong> {startup.released || 'N/A'}</Paragraph>
+                        <Paragraph><strong>Date de création:</strong> {new Date(startup.createdAt).toLocaleDateString()}</Paragraph>
                         <Paragraph><strong>Quantité d'actions vendables:</strong> {startup.quantity || 0}</Paragraph>
                     </Card>
                 </Col>
@@ -128,7 +116,7 @@ const SingleProd = () => {
 
             <Modal
                 title="Connectez-vous pour continuer"
-                visible={isModalVisible}
+                open={isModalVisible}
                 onOk={() => navigate('/auth/login')}
                 onCancel={() => setIsModalVisible(false)}
                 okText="Se connecter"

@@ -4,41 +4,37 @@ import { useNavigate } from 'react-router-dom';
 
 const { Title, Text } = Typography;
 
-const ProductCard = ({ post }) => {
+const ProductCard = ({ product }) => {
     const navigate = useNavigate();
 
-    const handleKnowMoreClick = (post) => {
-        navigate(`/startup/${post.id}`);
+    const handleKnowMoreClick = (product) => {
+        navigate(`/product/${product._id}`);
     };
 
     return (
         <Card
             hoverable
-            cover={<img alt={post.name} src={post.background_image} style={{ height: 200, objectFit: 'cover' }} />}
+            cover={<img alt={product.title} src={product.images?.[0]} style={{ height: 200, objectFit: 'cover' }} />}
             actions={[
-                <Button type="primary" onClick={() => handleKnowMoreClick(post)}>
+                <Button type="primary" onClick={() => handleKnowMoreClick(product)}>
                     En Savoir Plus
-                </Button>,
-                 <a href={post.website || '#'} target="_blank" rel="noopener noreferrer">
-                    <Button>Website</Button>
-                </a>
+                </Button>
             ]}
         >
             <Card.Meta
-                title={<Title level={4}>{post.name}</Title>}
+                title={<Title level={4}>{product.title}</Title>}
                 description={
                     <>
-                        <Text ellipsis={{ rows: 3 }}>{post.body || "No description available."}</Text>
+                        <Text ellipsis={{ rows: 3 }}>{product.description || "No description available."}</Text>
                         <div style={{ margin: '12px 0' }}>
-                            <Rate disabled allowHalf defaultValue={post.rating} />
-                            <Text type="secondary" style={{ marginLeft: '8px' }}>({post.rating})</Text>
+                            <Rate disabled allowHalf defaultValue={product.totalrating} />
+                            <Text type="secondary" style={{ marginLeft: '8px' }}>({product.totalrating})</Text>
                         </div>
                         <div>
-                            <Tag color="blue">{post.category || 'N/A'}</Tag>
-                            <Tag color="geekblue">{post.subcategory || 'N/A'}</Tag>
+                            <Tag color="blue">{product.category || 'N/A'}</Tag>
                         </div>
                          <div style={{ marginTop: '12px' }}>
-                            <Text strong>Price:</Text> <Text>{post.price ? `${post.price}$` : 'Free'}</Text>
+                            <Text strong>Price:</Text> <Text>{product.price ? `${product.price}$` : 'Free'}</Text>
                         </div>
                     </>
                 }

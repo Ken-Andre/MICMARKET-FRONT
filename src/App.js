@@ -16,6 +16,7 @@ import SingleProd from "./pages/SingleProd";
 // import Login from "./pages/Log";
 import Login from "./components/Login";
 import ForgotPassword from "./pages/ForgotPassword";
+import Resetpassword from "./pages/Resetpassword";
 
 import AuthLayout from "./pages/Signup";
 import Signin from "./pages/Signin";
@@ -53,6 +54,7 @@ function App() {
             <Route path="about" element={<About />} />
             <Route path="contact" element={<Contact />} />
             <Route path="categories" element={<OurStore />} />
+            <Route path="product/:id" element={<SingleProduct />} />
             <Route path="startup/:id" element={<SingleProd />} />
             <Route path="faq" element={<FAQ />} />
             <Route path="privacy" element={<PrivacyPolicy />} />
@@ -65,6 +67,7 @@ function App() {
             <Route path="signup" element={<Signin />} />
             <Route path="startup" element={<Startup />} />
             <Route path="forgot-password" element={<ForgotPassword />} />
+            <Route path="reset-password/:token" element={<Resetpassword />} />
           </Route>
 
           {/* Utils Section */}
